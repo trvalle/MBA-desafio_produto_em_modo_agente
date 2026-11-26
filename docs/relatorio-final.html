@@ -1,0 +1,901 @@
+<!doctype html>
+<html lang="pt-BR" data-theme="light" data-mode="simple">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Catraca · Da especificação à evidência</title>
+<style>
+:root{--bg:#f5f3ed;--paper:#fffefa;--ink:#1f2926;--muted:#626d65;--line:#dcded5;--accent:#345d45;--soft:#e6eddf;--amber:#91571b;--amberbg:#fff0d9;--red:#9b382e;--redbg:#fbe8e2;--purple:#695a8b;--shadow:0 12px 36px #26352809}
+[data-theme=dark]{--bg:#121c18;--paper:#1b2821;--ink:#eff2e9;--muted:#aebbad;--line:#394b3f;--accent:#a3cc9e;--soft:#293e2e;--amber:#efbf79;--amberbg:#463624;--red:#f6ac9b;--redbg:#4b2c27;--purple:#c9b6ec;--shadow:none}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:30px}body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.65 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}a{color:var(--accent);text-underline-offset:4px}button,input,select{font:inherit}button,select{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible{outline:3px solid var(--purple);outline-offset:4px}
+aside{position:fixed;inset:0 auto 0 0;width:254px;padding:30px 22px;background:var(--paper);border-right:1px solid var(--line);overflow:auto}.brand{font-weight:900;font-size:31px;letter-spacing:-1.5px}.brand span{color:var(--accent)}.kicker{font-size:11px;font-weight:750;letter-spacing:1.9px;text-transform:uppercase;color:var(--muted)}nav{margin:30px 0}nav a{display:block;padding:8px 10px;text-decoration:none;color:var(--muted);border-radius:7px;font-size:13px}nav a:hover,nav a.active{background:var(--soft);color:var(--ink)}.side-bottom{font-size:11px;color:var(--muted);padding-top:15px;border-top:1px solid var(--line)}
+main{margin-left:254px;max-width:1550px;padding:35px clamp(22px,5vw,85px) 80px}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:32px;flex-wrap:wrap}.controls{display:flex;gap:8px;flex-wrap:wrap}.control{background:var(--paper);color:var(--ink);border:1px solid var(--line);padding:8px 13px;border-radius:8px;font-size:12px}.control:hover{border-color:var(--accent)}h1,h2,h3,p{margin-top:0}h1{font-family:Georgia,serif;font-weight:normal;font-size:clamp(42px,5vw,76px);line-height:1.06;letter-spacing:-2px;margin:21px 0}h1 em{color:var(--accent);font-style:normal}h2{font-size:29px;line-height:1.2;letter-spacing:-.8px;margin-bottom:16px}h3{font-size:17px;line-height:1.4;margin-bottom:10px}.lead{font-size:18px;max-width:760px;color:var(--muted)}.hero{padding:28px 0 36px;border-bottom:1px solid var(--line)}.hero-grid{display:grid;grid-template-columns:1.5fr 1fr;gap:36px;align-items:center}.ticket{background:var(--accent);color:var(--paper);border-radius:18px;padding:28px;transform:rotate(2deg);position:relative;box-shadow:var(--shadow)}[data-theme=dark] .ticket{color:#132719}.ticket-title{font-size:35px;font-weight:850;line-height:1.1;letter-spacing:-1px;margin:12px 0 22px}.ticket-rule{border-top:2px dashed currentColor;opacity:.4;margin:20px -28px}.ticket-code{font-family:monospace;letter-spacing:5px;font-size:17px}.ticket small{font-size:10px;text-transform:uppercase;letter-spacing:1.3px}.label{display:inline-flex;align-items:center;gap:5px;padding:5px 9px;border-radius:5px;font-size:11px;font-weight:700;line-height:1.3}.pass{background:var(--soft);color:var(--accent)}.pending,.blocked{background:var(--amberbg);color:var(--amber)}.fail{background:var(--redbg);color:var(--red)}.neutral{background:var(--bg);color:var(--muted)}.meta{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin-top:24px}.section{padding-top:54px}.section-head{display:flex;justify-content:space-between;gap:20px;align-items:start;margin-bottom:20px}.index{font-family:monospace;color:var(--accent);font-size:12px;margin-bottom:12px}.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.four{grid-template-columns:repeat(4,minmax(0,1fr))}.card{background:var(--paper);padding:23px;border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}.card p:last-child{margin-bottom:0}.muted{color:var(--muted)}.small{font-size:12px}.metric{font-size:40px;font-weight:700;line-height:1.1;margin:12px 0 8px;letter-spacing:-1px}.callout{padding:18px 22px;border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:4px;background:var(--paper);margin:20px 0}.callout.warning{border-left-color:var(--amber)}.flow{display:flex;gap:12px;align-items:stretch;flex-wrap:wrap;margin:22px 0}.node{flex:1;min-width:140px;background:var(--paper);border:1px solid var(--line);border-radius:10px;padding:20px}.node b{display:block;margin-bottom:7px}.arrow{align-self:center;color:var(--accent);font-size:22px}.technical{display:none}[data-mode=technical] .technical{display:block}.table-scroll{overflow:auto;border:1px solid var(--line);border-radius:10px}table{border-collapse:collapse;width:100%;font-size:12px;background:var(--paper)}th,td{text-align:left;padding:13px 15px;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:1px;background:var(--soft)}tr:last-child td{border-bottom:0}.filters{display:flex;gap:10px;margin:18px 0;flex-wrap:wrap}input,select{padding:11px 13px;background:var(--paper);border:1px solid var(--line);border-radius:7px;color:var(--ink)}input{flex:1;min-width:180px}details{background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:16px 20px;margin-bottom:10px}summary{cursor:pointer;font-weight:650}details>div{padding-top:15px;color:var(--muted)}.timeline{border-left:2px solid var(--line);padding-left:25px;margin-left:8px}.milestone{position:relative;padding-bottom:23px}.milestone:before{content:"";position:absolute;left:-32px;top:5px;width:12px;height:12px;background:var(--accent);border:3px solid var(--bg);border-radius:50%}.milestone time{font:11px/1.5 monospace;color:var(--muted)}.milestone p{margin:5px 0 0;font-size:13px}.codeblock{position:relative;border:1px solid var(--line);border-radius:9px;background:var(--paper);margin:12px 0}pre{padding:20px;margin:0;overflow:auto;font:12px/1.7 ui-monospace,Consolas,monospace;white-space:pre-wrap;overflow-wrap:anywhere}.copy{position:absolute;right:8px;top:8px}.placeholder{border:2px dashed var(--line);background:var(--paper);border-radius:12px;padding:38px;text-align:center}.placeholder .symbol{font-size:35px;color:var(--muted)}.bar{height:9px;background:var(--line);border-radius:8px;overflow:hidden;margin:12px 0}.bar span{display:block;height:100%;background:var(--accent)}.compare{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:10px;overflow:hidden}.compare>div{padding:24px;background:var(--paper)}.status-row{display:flex;gap:10px;align-items:center;margin:12px 0}.artifact{display:block;padding:12px 0;border-bottom:1px solid var(--line);text-decoration:none}.artifact:last-child{border:0}.artifact strong{display:block}.artifact span{font-size:12px;color:var(--muted)}.presentation{counter-reset:stage}.presentation li{margin:12px 0}.empty{text-align:center;color:var(--muted);padding:30px}.footer{padding-top:50px;margin-top:50px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}.sr-only{position:absolute;width:1px;height:1px;padding:0;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:1150px){aside{width:210px;padding:24px 15px}main{margin-left:210px;padding:25px}.grid,.four{grid-template-columns:repeat(2,minmax(0,1fr))}.hero-grid{grid-template-columns:1fr}.ticket{max-width:420px;transform:none}.hero h1{font-size:54px}}
+@media(max-width:750px){aside{position:static;width:auto;padding:18px 20px}aside nav{display:flex;overflow:auto;gap:4px;margin:15px 0 0}nav a{white-space:nowrap}.side-bottom{display:none}main{margin:0;padding:22px 18px}.grid,.two,.four,.compare{grid-template-columns:1fr}h1,.hero h1{font-size:44px}.section{padding-top:38px}.hero-grid{gap:22px}.section-head{display:block}.arrow{display:none}.flow{display:grid;grid-template-columns:1fr}.metric{font-size:34px}table{min-width:680px}.toolbar{margin-bottom:12px}}
+@media print{*{box-shadow:none!important}body{background:#fff;color:#111;font-size:10pt}aside,.toolbar,.filters,.copy,.no-print{display:none!important}main{margin:0;padding:0;max-width:none}.section{padding-top:24px;break-inside:auto}.card,.node,details,.compare,.milestone{break-inside:avoid;background:#fff}.hero-grid{grid-template-columns:1.6fr 1fr}h1,.hero h1{font-size:40px}h2{font-size:22px}.technical{display:block!important}a{color:#111}.table-scroll{overflow:visible}table{min-width:0;font-size:8pt}th,td{padding:7px}.ticket{transform:none;background:#eee;color:#111}.grid{grid-template-columns:repeat(2,1fr)}.four{grid-template-columns:repeat(4,1fr)}.section-head{break-after:avoid}.footer{margin-top:20px}}
+</style></head>
+<body>
+<aside><div class="brand">catraca<span>↗</span></div><div class="kicker">Caderno de engenharia</div><nav aria-label="Seções do relatório" id="navigation"></nav><div class="side-bottom">MBA · Desenvolvimento em modo agente<br>Relatório local · sem dependências<br><span id="sideStatus">Em desenvolvimento</span></div></aside>
+<main>
+<div class="toolbar"><span class="kicker">Do brief ao produto / estudo de caso</span><div class="controls"><button class="control" id="modeButton" aria-pressed="false">Leitura: leigo</button><button class="control" id="themeButton" aria-pressed="false">Tema escuro</button><button class="control" id="printButton">Imprimir / PDF</button></div></div>
+<section class="hero" id="overview"><div class="hero-grid"><div><span class="label pending" id="heroStatus">◷ Em desenvolvimento</span><h1>Um ingresso.<br><em>Uma promessa<br>que precisa valer.</em></h1><p class="lead">Como transformar regras de venda, pagamento e entrada em um produto coerente — e demonstrar, com evidências, que as partes funcionam juntas.</p></div><div class="ticket" aria-label="Ilustração conceitual, não um ingresso real"><small>Ilustração do desafio · não é uma tela do produto</small><div class="ticket-title">PAGAR.<br>CONFIRMAR.<br>ENTRAR.</div><p>O desafio começa quando uma etapa interfere na outra.</p><div class="ticket-rule"></div><div class="ticket-code">CATRACA / MBA</div></div></div><div class="meta" id="metadata"></div></section>
+<div id="reportSections"></div>
+<footer class="footer">Relatório complementar de estudo. Os contratos, relatórios independentes e histórico do repositório são as fontes de evidência. Uso de IA declarado; não há promessa de nota acadêmica. <span id="validationFooter"></span></footer>
+</main>
+<script type="application/json" id="report-data">
+{
+  "schemaVersion": 1,
+  "project": {
+    "name": "Catraca",
+    "subtitle": "Do brief ao produto em modo agente",
+    "module": "MBA · Desenvolvimento em modo agente",
+    "repo": "https://github.com/trvalle/MBA-desafio_produto_em_modo_agente",
+    "branch": "main",
+    "snapshotCommit": "1e0f42b",
+    "snapshotAt": "2026-11-26T02:46:46Z",
+    "conclusionDate": null,
+    "status": "Em desenvolvimento",
+    "verdict": "REJECTED — CORRECTIONS REQUIRED",
+    "verdictReason": "F05 em implementação, F06 pendente e fluxo final ainda não executado. Não é uma entrega aprovada.",
+    "conformity": null,
+    "requirementsCount": 46,
+    "requirementsUnit": "grupos rastreáveis; contagem atômica ainda não consolidada",
+    "stateWarning": "O arquivo state.json ainda não reflete os merges e o PASS de F01 nesta fotografia; atualização pendente pela coordenação."
+  },
+  "validation": {
+    "status": "PASS — controles e estrutura verificados em Chromium; conteúdo final ainda pendente",
+    "checks": [
+      [
+        "Carregamento offline",
+        "PASS",
+        "Zero erros JavaScript e zero requisições HTTP externas; 17 seções renderizadas."
+      ],
+      [
+        "Matriz e filtros",
+        "PASS",
+        "46 grupos renderizados; busca R07 retorna 2; filtro F01 retorna 6; estado vazio de PASS exibido."
+      ],
+      [
+        "Modo e tema",
+        "PASS",
+        "Alternância simple/technical e light/dark observada."
+      ],
+      [
+        "Cópia de comandos",
+        "PASS",
+        "Botão Copiado; clipboard confere exatamente com o comando."
+      ],
+      [
+        "Links locais e navegação",
+        "PASS",
+        "Nenhum destino local ausente e nenhuma âncora inválida. URLs externas não foram auditadas por esta execução."
+      ],
+      [
+        "Responsividade",
+        "PASS",
+        "Sem overflow horizontal global em 1440×1000, 768×1024 e 390×844; telas desktop/mobile inspecionadas."
+      ],
+      [
+        "Impressão",
+        "PASS parcial",
+        "Botão aciona print; CSS oculta navegação; PDF A4 gerado. Todas as páginas impressas não foram inspecionadas visualmente."
+      ],
+      [
+        "Conteúdo e evidências",
+        "PASS parcial",
+        "F01 FAIL/PASS e Git lidos; números arquivados separados dos comunicados; resultado final e screenshots do produto pendentes."
+      ]
+    ],
+    "limitations": [
+      "Screenshots reais do produto ainda não capturados; placeholders identificados.",
+      "O estado final, commit de entrega e resultado acadêmico ainda não estão disponíveis.",
+      "Links externos e todas as páginas do PDF não foram auditados por esta validação.",
+      "Esta validação pertence à versão provisória do relatório; repetir após atualização final."
+    ]
+  },
+  "features": [
+    {
+      "id": "F01",
+      "name": "Fundação e ambiente",
+      "wave": 1,
+      "status": "pass",
+      "text": "Subida, seed, persistência e transações; seis itens aprovados em reavaliação independente.",
+      "commit": "98c51eb",
+      "evidence": "features/F01/reports/2026-11-26T024629Z-98c51eb-reevaluation.md"
+    },
+    {
+      "id": "F02",
+      "name": "Contas e sessões",
+      "wave": 2,
+      "status": "pending",
+      "text": "Implementada e integrada pelo PR #1. Avaliação independente completa ainda não consolidada neste relatório.",
+      "commit": "37aae3f",
+      "evidence": "../README.md"
+    },
+    {
+      "id": "F03",
+      "name": "Eventos e catálogo",
+      "wave": 2,
+      "status": "pending",
+      "text": "Implementada e integrada pelo PR #2; adapter conectado à autenticação após a wave paralela.",
+      "commit": "37aae3f",
+      "evidence": "../README.md"
+    },
+    {
+      "id": "F04",
+      "name": "Compra e API parceira",
+      "wave": 3,
+      "status": "pending",
+      "text": "Implementada e integrada pelo PR #3. Aprovação independente e fluxo padrão ainda pendentes.",
+      "commit": "93b86c1",
+      "evidence": "architecture.md"
+    },
+    {
+      "id": "F05",
+      "name": "Operação dos eventos",
+      "wave": 4,
+      "status": "pending",
+      "text": "Cancelamento, check-in e painel em implementação nesta fotografia.",
+      "commit": null,
+      "evidence": "features/F05/contract.md"
+    },
+    {
+      "id": "F06",
+      "name": "Interface e jornada",
+      "wave": 5,
+      "status": "pending",
+      "text": "Interface e fluxo completo do avaliador ainda pendentes nesta fotografia.",
+      "commit": null,
+      "evidence": "features/F06/contract.md"
+    }
+  ],
+  "requirements": [
+    {
+      "source": "Brief Eventos",
+      "id": "R01",
+      "criteria": "F03-AC01/02; F06-AC03",
+      "description": "Validar nome/local/início futuro/capacidade inteira ≥1/preço positivo na criação e edição; HTTP e UI rejeitam inválidos.",
+      "owner": "F03/F06",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Brief Eventos",
+      "id": "R02",
+      "criteria": "F03-AC01/03; F04-AC05; F06-AC01",
+      "description": "Draft inicial; somente published não cancelado em vitrine/API e compra.",
+      "owner": "F03/F04/F06",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Brief Eventos",
+      "id": "R03",
+      "criteria": "F03-AC02; F04-AC01; F05-AC05",
+      "description": "Lock de edição/compra; capacidade ≥ pending+confirmed; ticket guarda preço histórico; receita E1 R$350.",
+      "owner": "F03/F04/F05",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Brief Eventos",
+      "id": "R04",
+      "criteria": "F03-AC06; F06-AC03/04",
+      "description": "URL própria de gestão contém edição/publicação/cancelamento/check-in/painel.",
+      "owner": "F03/F05/F06",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Brief Vagas",
+      "id": "R05",
+      "criteria": "F03-AC02/03; F04-AC01/04; F05-AC06",
+      "description": "Ocupação pending+confirmed; disponíveis capacity-ocupação, ou zero se cancelado.",
+      "owner": "F03/F04/F05",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Brief Vagas",
+      "id": "R06",
+      "criteria": "F04-AC01; F06-AC02",
+      "description": "Compra de um ingresso por participante/parceiro retorna pending sem aguardar gateway.",
+      "owner": "F04/F06",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Brief Vagas",
+      "id": "R07",
+      "criteria": "F04-AC03; F06-AC02/07",
+      "description": "BEGIN IMMEDIATE; 2 eventos novos de capacidade 5, 30 simultâneas: 5×202 e 25×409; UI literal Ingressos esgotados.",
+      "owner": "F04/F06",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Brief Vagas",
+      "id": "R08",
+      "criteria": "F04-AC02/04",
+      "description": "Aprovação confirma; recusa declined e libera vaga; medir gateway.",
+      "owner": "F04",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Brief Vagas",
+      "id": "R09",
+      "criteria": "F04-AC01/07; F06-AC02/06",
+      "description": "Código único; meus ingressos exibe evento/status/código da conta; checkedIn separado.",
+      "owner": "F04/F06",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Brief Check-in",
+      "id": "R10",
+      "criteria": "F05-AC03/04; F06-AC04",
+      "description": "Precedência e cinco mensagens literais; repetição/concorrrência concede entrada uma vez.",
+      "owner": "F05/F06",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Brief Cancelamento",
+      "id": "R11",
+      "criteria": "F03-AC05; F04-AC04/05; F05-AC01/02/06; F06-AC04",
+      "description": "Cancelamento published irreversível; ≤10s pending→cancelled e confirmed→refunded; depois de 45s callback não altera.",
+      "owner": "F03/F04/F05/F06",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Brief Painel",
+      "id": "R12",
+      "criteria": "F05-AC05/06; F06-AC04",
+      "description": "Dois canais; 6 métricas; confirmed inclui utilizados, check-ins só confirmed, receita preços históricos.",
+      "owner": "F05/F06",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Brief Acesso",
+      "id": "R13",
+      "criteria": "F02-AC05; F03-AC04/06; F05-AC07; F06-AC05",
+      "description": "Autorização no servidor e propriedade; acesso direto não revela nome/números/ingressos.",
+      "owner": "F02/F03/F05/F06",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Brief Quem usa",
+      "id": "ACT01",
+      "criteria": "F02-AC01/02/04; F06-AC01",
+      "description": "Visitante público, cadastro participante nome/email/senha, login/logout; organizadores só seed.",
+      "owner": "F02/F06",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Brief Status",
+      "id": "STS01",
+      "criteria": "F04-AC06; F05-AC04; F06-AC06",
+      "description": "API usa pending/confirmed/declined/cancelled/refunded; UI rótulos PT-BR; checkedIn boolean independente.",
+      "owner": "F04/F05/F06",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Gateway simulado",
+      "id": "GW01",
+      "criteria": "F04-AC02",
+      "description": "0001 aprovado/0002 recusado/outros recusados em 2–5s; 0003 aprovado/0004 recusado em 30–40s; modo padrão sem chave real.",
+      "owner": "F04",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Gateway simulado",
+      "id": "GW02",
+      "criteria": "F04-AC02/05",
+      "description": "Cartão exatamente 16 dígitos; inválido rejeitado antes de ingresso; corpo com email válido.",
+      "owner": "F04",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Contrato fixo autenticação",
+      "id": "API01",
+      "criteria": "F04-AC05",
+      "description": "Três rotas: X-Api-Key ausente/inválida →401 unauthorized, antes de ler/validar corpo.",
+      "owner": "F04",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Contrato GET events",
+      "id": "API02",
+      "criteria": "F04-AC06",
+      "description": "GET /api/partner/events →200 array de id/name/startsAt/priceCents/availableSeats; IDs strings.",
+      "owner": "F04",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Contrato POST purchases",
+      "id": "API03",
+      "criteria": "F04-AC01/05/06",
+      "description": "POST /api/partner/events/{eventId}/purchases recebe buyerEmail/cardNumber; 202 ticketId/code/status pending.",
+      "owner": "F04",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Contrato precedência",
+      "id": "API04",
+      "criteria": "F04-AC05",
+      "description": "Após chave: corpo inválido 422 invalid_request; evento ausente/draft/cancelado 404 event_not_available; vagas 409 sold_out.",
+      "owner": "F04",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Contrato GET tickets",
+      "id": "API05",
+      "criteria": "F04-AC05/06",
+      "description": "GET /api/partner/tickets/{ticketId} →200 ticketId/code/eventId/status/checkedIn; ausente 404 ticket_not_found; qualquer canal.",
+      "owner": "F04",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Contrato canais",
+      "id": "API06",
+      "criteria": "F04-AC07; CF05",
+      "description": "API não vincula conta pelo email; lotação/painel/check-in/cancelamento idênticos entre canais.",
+      "owner": "F04/F05",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Harness 3",
+      "id": "HAR01",
+      "criteria": "F01-AC01",
+      "description": "Clone limpo sobe tudo+seed com npm run up, sem passo extra.",
+      "owner": "F01",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Harness 3 / fluxo 17",
+      "id": "HAR02",
+      "criteria": "F01-AC02",
+      "description": "npm run down encerra tudo; nenhuma porta/container restante; novo up funciona.",
+      "owner": "F01",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Harness 3",
+      "id": "HAR03",
+      "criteria": "F01-AC03; CF01",
+      "description": "Seed idempotente com 2 organizadores e 1 participante; credenciais/chave no README.",
+      "owner": "F01",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Harness 3",
+      "id": "HAR04",
+      "criteria": "F01-AC04",
+      "description": "npm run gates inclui testes automatizados e passa na main final.",
+      "owner": "F01",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Harness 3",
+      "id": "HAR05",
+      "criteria": "F01-AC06",
+      "description": "AGENTS.md raiz com comandos/regras/mapa; arquivo alternativo de ferramenta, se existir, aponta a AGENTS.",
+      "owner": "F01",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Tecnologias e restrições",
+      "id": "ENV01",
+      "criteria": "F01-AC06",
+      "description": "Git/GitHub/PRs/Docker; agente permitido; Windows via WSL; runtime além Node em container; avaliador Linux/macOS+Docker+Git+Node LTS.",
+      "owner": "F01",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Requisito 1",
+      "id": "DOC01",
+      "criteria": "PRD; CF01–CF11",
+      "description": "≥5 features com IDs/consumes/provides, DAG real/waves, wave ≥2 e fora de escopo.",
+      "owner": "Todas",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Requisitos 1/2",
+      "id": "DOC02",
+      "criteria": "PRD e contratos",
+      "description": "Cada R01–R13 em critério; cada aresta com cross-feature; cada AC e CF mapeado a item verificável.",
+      "owner": "Todas",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Requisito 2",
+      "id": "DOC03",
+      "criteria": "spec/plan/contract",
+      "description": "Spec técnica, plano em etapas, contrato com pré-requisitos e evidência observável por feature.",
+      "owner": "Todas",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Requisito 4",
+      "id": "PAR01",
+      "criteria": "Wave2; auditoria Git",
+      "description": "Agentes implementam em simultâneo, worktrees/branches separadas, PRs merged visíveis; first(A)\u003clast(B) e first(B)\u003clast(A).",
+      "owner": "F02/F03",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Requisito 5",
+      "id": "EVA01",
+      "criteria": "Contratos / reports",
+      "description": "Avaliador não implementador com contexto separado/vazio; data, SHA, ferramenta/modelo, evidência/veredito por item.",
+      "owner": "Todas",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Requisito 5",
+      "id": "EVA02",
+      "criteria": "Auditoria reports",
+      "description": "Nova avaliação a cada correção; relatórios imutáveis após commit; último aprova todos itens; git log de relatório contém único commit.",
+      "owner": "Todas",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Requisito 6",
+      "id": "STA01",
+      "criteria": "docs/state.json",
+      "description": "Estado verdadeiro: todas concluídas só após aprovação e caminho existente do relatório mais recente.",
+      "owner": "Todas",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Entregável",
+      "id": "DEL01",
+      "criteria": "README / auditoria remota",
+      "description": "Um projeto por repo público; tudo main; PRs paralelos merged/visíveis e links no README.",
+      "owner": "Todas",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Entregável README",
+      "id": "DEL02",
+      "criteria": "README / execução",
+      "description": "Como rodar; endereços WEB/API; credenciais; mapa PRD/features/relatórios/estado/AGENTS/PRs; decisões stack/R07/gateway/isolamento.",
+      "owner": "Todas",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Fluxo avaliador 1–18",
+      "id": "END01",
+      "criteria": "F06-AC07",
+      "description": "Executar passos completos na ordem e com dados/modo padrão em clone limpo da main; registrar evidências de produto e artefatos.",
+      "owner": "F06/global",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Prompt mestre 7/8/16–20",
+      "id": "AUD01",
+      "criteria": "Auditoria final",
+      "description": "Matriz/pegadinhas, avaliação independente final, simulação professor, clone limpo, auditoria Git/documental e correção de falhas.",
+      "owner": "Global",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Prompt mestre 22",
+      "id": "HTML01",
+      "criteria": "docs/relatorio-final.html",
+      "description": "HTML5 PT-BR, sem backend/dependências; responsivo, acessível, impressão, recursos essenciais sem CDN, preferencialmente offline.",
+      "owner": "Complementar",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Prompt mestre 22.4–22.14",
+      "id": "HTML02",
+      "criteria": "Inspeção HTML",
+      "description": "Leigo/técnico; capa/contexto/pedido/armadilhas/solução/fluxo/arquitetura/tecnologias/IA/timeline com fatos reais.",
+      "owner": "Complementar",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Prompt mestre 22.15–22.24",
+      "id": "HTML03",
+      "criteria": "Inspeção/evidências HTML",
+      "description": "Demonstração/screenshots reais; antes/depois quando aplicável; dashboard testes; matriz requisito→solução→teste→evidência→resultado; segurança/conceitos/GitHub/execução/apresentação/veredito.",
+      "owner": "Complementar",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Prompt mestre 22.25/22.26",
+      "id": "HTML04",
+      "criteria": "Validação navegador",
+      "description": "Controles úteis funcionais; testar carregamento/JS/links/imagens/diagramas/responsividade/menus/botões/filtros/impressão quando disponível; registrar limitações.",
+      "owner": "Complementar",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Prompt mestre 23–26",
+      "id": "FIN01",
+      "criteria": "Auditoria final / resposta",
+      "description": "Revalidar após docs; métricas reais; commit final; veredito autorizado; instruções de submissão e caminho exato do HTML; não enviar ao professor.",
+      "owner": "Global",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    },
+    {
+      "source": "Prompt mestre 21/27",
+      "id": "CONT01",
+      "criteria": "Estado/evidências",
+      "description": "Persistir decisões, commit, testes, bloqueios e próxima ação; não declarar conclusão por limite de sessão.",
+      "owner": "Global",
+      "status": "pending",
+      "evidence": "requirements.md",
+      "result": "Aguardando consolidação da auditoria final; consultar relatórios específicos para evidências parciais."
+    }
+  ],
+  "tests": {
+    "latestArchived": {
+      "total": 18,
+      "passed": 18,
+      "failed": 0,
+      "skipped": 0,
+      "cancelled": 0,
+      "commit": "37aae3f",
+      "source": "evidence/eval-auth-events-37aae3f-gates.log"
+    },
+    "reportedLatest": {
+      "total": 22,
+      "passed": 22,
+      "failed": 0,
+      "source": "Execução informada pela coordenação; log ainda não anexado nesta fotografia."
+    },
+    "codeCoverage": null,
+    "categories": [
+      [
+        "Fundação",
+        "PASS",
+        "6/6 itens independentes, SHA 98c51eb"
+      ],
+      [
+        "Autenticação/eventos",
+        "Evidência parcial",
+        "18 testes totais nos gates arquivados; pareceres individuais pendentes"
+      ],
+      [
+        "Compra/concorrência",
+        "Execução comunicada",
+        "Suíte total de 22 testes informada; consolidação independente pendente"
+      ],
+      [
+        "UI / End-to-End",
+        "NOT RUN",
+        "Interface ainda pendente"
+      ],
+      [
+        "Fluxo oficial 1–18",
+        "NOT RUN",
+        "Execução final em clone limpo pendente"
+      ],
+      [
+        "Segurança",
+        "Parcial",
+        "Probes de integridade na F01; auditoria integrada pendente"
+      ],
+      [
+        "Cobertura de código",
+        "Não coletada",
+        "Não há percentual de instrumentação"
+      ],
+      [
+        "Auditoria final",
+        "NOT RUN",
+        "Não confundir com o PASS limitado da F01"
+      ]
+    ]
+  },
+  "timeline": [
+    {
+      "time": "25 nov 2026 · 23:36:50 −03",
+      "title": "Fundação no WSL e Docker",
+      "commit": "9fa0fa3",
+      "text": "Harness e contratos compartilhados passam a existir no repositório."
+    },
+    {
+      "time": "25 nov · 23:40:21 −03",
+      "title": "PRD e seis contratos",
+      "commit": "faa05af",
+      "text": "Critérios e waves publicados antes da implementação paralela."
+    },
+    {
+      "time": "25 nov · 23:41:42 → 23:43:18 −03",
+      "title": "F02 · autenticação em paralelo",
+      "commit": "05d5bbf → e477baa",
+      "text": "Implementação e testes em branch própria; PR #1 integrado."
+    },
+    {
+      "time": "25 nov · 23:42:20 → 23:43:38 −03",
+      "title": "F03 · eventos em paralelo",
+      "commit": "6a7a8d2 → 76e4a8d",
+      "text": "Intervalo sobreposto ao da F02; PR #2 integrado."
+    },
+    {
+      "time": "26 nov · 02:43:24 UTC",
+      "title": "Avaliador independente reprova F01",
+      "commit": "faa05af",
+      "text": "Dois defeitos reais em um item do contrato, apesar dos dois testes automatizados passarem."
+    },
+    {
+      "time": "25 nov · 23:44:32 −03",
+      "title": "Correção das invariantes",
+      "commit": "98c51eb",
+      "text": "Rejeição de centavos fracionários e callbacks assíncronos indevidos."
+    },
+    {
+      "time": "26 nov · 02:46:29 UTC",
+      "title": "Reavaliação de F01: PASS",
+      "commit": "98c51eb",
+      "text": "Seis itens aprovados; três testes nos gates e probes independentes documentados."
+    },
+    {
+      "time": "25 nov · 23:46:42 −03",
+      "title": "Compras integradas",
+      "commit": "93b86c1",
+      "text": "PR #3 integrado: reserva serializada e jobs de pagamento persistidos."
+    }
+  ],
+  "prs": [
+    {
+      "number": 1,
+      "name": "F02 · autenticação",
+      "first": "05d5bbf / 23:41:42",
+      "last": "e477baa / 23:43:18",
+      "status": "Merged"
+    },
+    {
+      "number": 2,
+      "name": "F03 · eventos",
+      "first": "6a7a8d2 / 23:42:20",
+      "last": "76e4a8d / 23:43:38",
+      "status": "Merged"
+    },
+    {
+      "number": 3,
+      "name": "F04 · compras",
+      "first": "29b3ccb",
+      "last": "29b3ccb",
+      "status": "Merged"
+    }
+  ],
+  "agents": [
+    {
+      "name": "Agente coordenador",
+      "role": "Arquitetura, F01, F04, integração, commits e organização das evidências.",
+      "evidence": "architecture.md"
+    },
+    {
+      "name": "Revisor de requisitos",
+      "role": "Leitura independente do brief/prompt, auditoria de armadilhas, PRD e contratos; elaboração deste material didático.",
+      "evidence": "requirements.md"
+    },
+    {
+      "name": "Implementador F02",
+      "role": "Contas e sessões em branch/worktree própria durante a wave 2.",
+      "evidence": "https://github.com/trvalle/MBA-desafio_produto_em_modo_agente/pull/1"
+    },
+    {
+      "name": "Implementador F03",
+      "role": "Domínio de eventos em paralelo com F02, em branch/worktree própria.",
+      "evidence": "https://github.com/trvalle/MBA-desafio_produto_em_modo_agente/pull/2"
+    },
+    {
+      "name": "eval_foundation",
+      "role": "Avaliador distinto do implementador, criado com contexto vazio. Reprovou, verificou correção e produziu novo relatório.",
+      "evidence": "features/F01/reports/2026-11-26T024629Z-98c51eb-reevaluation.md"
+    }
+  ],
+  "screenshots": [],
+  "artifacts": [
+    {
+      "name": "Repositório de entrega",
+      "desc": "Destino público; branch main. Submissão final ainda pendente.",
+      "href": "https://github.com/trvalle/MBA-desafio_produto_em_modo_agente"
+    },
+    {
+      "name": "README",
+      "desc": "Comandos, endereços, credenciais demonstrativas e mapa.",
+      "href": "../README.md"
+    },
+    {
+      "name": "Brief original",
+      "desc": "Fonte de verdade acadêmica e fluxo oficial de 18 passos.",
+      "href": "brief.md"
+    },
+    {
+      "name": "PRD",
+      "desc": "Seis features, waves, DAG e critérios de aceite.",
+      "href": "PRD.md"
+    },
+    {
+      "name": "Matriz de requisitos",
+      "desc": "46 grupos e registro preventivo de armadilhas.",
+      "href": "requirements.md"
+    },
+    {
+      "name": "Arquitetura",
+      "desc": "Interfaces, responsabilidade dos módulos e decisões.",
+      "href": "architecture.md"
+    },
+    {
+      "name": "Estado do projeto",
+      "desc": "Memória entre sessões; atualização pendente nesta fotografia.",
+      "href": "state.json"
+    },
+    {
+      "name": "AGENTS.md",
+      "desc": "Porta de entrada e regras para agentes.",
+      "href": "../AGENTS.md"
+    },
+    {
+      "name": "F01 · avaliação reprovada",
+      "desc": "Relatório imutável; falhas preservadas.",
+      "href": "features/F01/reports/2026-11-26T024324Z-faa05af-evaluation.md"
+    },
+    {
+      "name": "F01 · reavaliação aprovada",
+      "desc": "Seis itens PASS no SHA 98c51eb.",
+      "href": "features/F01/reports/2026-11-26T024629Z-98c51eb-reevaluation.md"
+    },
+    {
+      "name": "Gates de autenticação/eventos",
+      "desc": "Log arquivado: 18 passaram, zero falhas.",
+      "href": "evidence/eval-auth-events-37aae3f-gates.log"
+    },
+    {
+      "name": "Diagnóstico do ambiente",
+      "desc": "WSL, Docker e ferramentas efetivamente utilizados.",
+      "href": "evidence/environment.md"
+    }
+  ]
+}
+</script>
+<script>
+(function reportRuntime(){
+"use strict";
+const D=JSON.parse(document.getElementById("report-data").textContent);
+const esc=v=>String(v??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const link=(href,label)=>`<a href="${esc(href)}">${esc(label)}</a>`;
+const statusNames={pass:"✓ Aprovado",fail:"✕ Reprovado",pending:"◷ Pendente",blocked:"! Bloqueado",neutral:"— Não executado"};
+const badge=(s,label)=>`<span class="label ${s}">${esc(label||statusNames[s]||s)}</span>`;
+const card=(title,body)=>`<article class="card"><h3>${title}</h3>${body}</article>`;
+const detail=(title,body)=>`<details><summary>${title}</summary><div>${body}</div></details>`;
+const command=(value)=>`<div class="codeblock"><button class="control copy" data-copy="${esc(value)}" aria-label="Copiar comando">Copiar</button><pre>${esc(value)}</pre></div>`;
+let sections=[];
+const section=(id,title,sub,body)=>{sections.push({id,title});return `<section class="section" id="${id}"><div class="section-head"><div><div class="index">${String(sections.length).padStart(2,"0")} / CATrACA</div><h2>${title}</h2>${sub?`<p class="muted">${sub}</p>`:""}</div></div>${body}</section>`};
+const rows=(items)=>items.map(r=>`<tr>${r.map(x=>`<td>${x}</td>`).join("")}</tr>`).join("");
+const table=(headers,items)=>`<div class="table-scroll"><table><thead><tr>${headers.map(h=>`<th scope="col">${h}</th>`).join("")}</tr></thead><tbody>${rows(items)}</tbody></table></div>`;
+document.getElementById("heroStatus").className="label "+(D.project.verdict.startsWith("APPROVED")?"pass":"pending");
+document.getElementById("heroStatus").textContent=D.project.status;
+document.getElementById("sideStatus").textContent=D.project.status;
+document.getElementById("metadata").innerHTML=`<span>Branch <b>${esc(D.project.branch)}</b></span><span>Fotografia <b>${esc(D.project.snapshotCommit)}</b></span><span>${esc(D.project.snapshotAt)}</span><span>${link(D.project.repo,"Abrir GitHub ↗")}</span>`;
+let body="";
+body+=section("challenge","O desafio, sem jargão","Vender um lugar parece simples. Preservar a mesma verdade em todas as etapas é o trabalho difícil.",`<div class="grid">${card("A promessa ao participante","<p>Comprar um ingresso para um evento pequeno, acompanhar o pagamento e apresentar um código na entrada.</p>")}${card("A responsabilidade do organizador","<p>Controlar capacidade, preços, entrada e cancelamento, vendo somente seus próprios eventos e números corretos.</p>")}${card("O que o professor avalia","<p>Produto funcionando, especificações conectadas, desenvolvimento paralelo real e aprovação independente de cada feature.</p>")}</div><div class="callout"><b>Analogia:</b> pense em uma lista de lugares na portaria. Enquanto o pagamento está pendente, o lugar já está reservado. Se o evento é cancelado, ninguém pode “reativar” a entrada só porque chegou uma confirmação atrasada.</div><p class="muted">A história de um sistema anterior com overselling e receita incorreta faz parte do brief. Esse código foi descartado antes do desafio e não foi inspecionado aqui. Não tratamos a narrativa como defeito observado no repositório atual.</p>`);
+body+=section("solution","Seis partes, um produto","A aprovação pertence a um contrato e a um commit; implementar uma parte não equivale a concluir a entrega.",`<div class="grid">${D.features.map(f=>card(`${f.id} <span class="small muted">/ wave ${f.wave}</span>`,`<h3>${esc(f.name)}</h3>${badge(f.status)}<p class="small" style="margin-top:12px">${esc(f.text)}</p><p class="small">${f.commit?`Commit <code>${esc(f.commit)}</code> · `:""}${link(f.evidence,"Consultar evidência/contrato")}</p>`)).join("")}</div><div class="callout warning">${esc(D.project.stateWarning)}</div><div class="technical"><h3>Dependências reais</h3><pre>F01 → F02 ─┬→ F04 → F05 → F06\n   └→ F03 ─┘    └────────→ F06\nF02 e F03 também alimentam a interface.\nF02 → F05 protege as operações.\nCF11: adapter de F03 integrado à autenticação após a wave 2.</pre></div>`);
+body+=section("journey","Como uma compra atravessa o sistema","Este é o fluxo especificado e implementado por partes. O teste final de toda a jornada permanece separado.",`<div class="flow"><div class="node"><b>1. Escolher</b>Visitante consulta evento publicado.</div><span class="arrow" aria-hidden="true">→</span><div class="node"><b>2. Reservar</b>Participante ou parceiro cria uma compra pendente.</div><span class="arrow" aria-hidden="true">→</span><div class="node"><b>3. Processar</b>O simulador decide depois; a página não fica esperando.</div><span class="arrow" aria-hidden="true">→</span><div class="node"><b>4. Entrar</b>O organizador valida o código confirmado uma única vez.</div></div>${table(["Estado","Significado","Ocupa vaga?"],[["Pendente / pending","Aguardando gateway","Sim"],["Confirmado / confirmed","Pagamento aprovado","Sim, mesmo após check-in"],["Recusado / declined","Gateway recusou","Não"],["Cancelado / cancelled","Estava pendente ao cancelar o evento","Não"],["Estornado / refunded","Estava confirmado ao cancelar o evento","Não"]])}<p class="small muted" style="margin-top:14px">Em evento cancelado, vagas disponíveis são sempre zero. Check-in é uma informação adicional, não um sexto status.</p><div class="grid two">${card("Quando o cartão é recusado","<p>A reserva é liberada. O participante continua vendo o ingresso recusado; uma pessoa nova pode ocupar a vaga.</p>")}${card("Quando o evento é cancelado","<p>Ingressos confirmados viram estornados e pendentes viram cancelados em até dez segundos. Uma resposta tardia não pode desfazer a decisão.</p>")}</div><div class="technical">${table(["Cartão (últimos 4)","Resultado padrão","Faixa obrigatória"],[["0001","Aprovado","2–5 segundos"],["0002","Recusado","2–5 segundos"],["0003","Aprovado","30–40 segundos"],["0004","Recusado","30–40 segundos"],["Qualquer outro","Recusado","2–5 segundos"]])}<p>São necessários 16 dígitos. A configuração padrão usa 3s e 35s; nenhuma chave de pagamento real é exigida.</p></div>`);
+body+=section("architecture","Arquitetura em duas leituras","Um aplicativo local, uma base de dados e um pagamento simulado. Sem serviços externos de pagamento.",`<div class="flow"><div class="node"><b>Vitrine e balcão</b>O navegador apresenta as ações do participante e do organizador.</div><span class="arrow" aria-hidden="true">↔</span><div class="node"><b>Responsável pelas regras</b>O servidor valida quem pode agir e o que pode acontecer.</div><span class="arrow" aria-hidden="true">↔</span><div class="node"><b>Livro de registros</b>O banco guarda eventos, contas, reservas e resultados.</div></div><div class="technical"><div class="flow"><div class="node"><b>HTML / CSS / JS</b>SPA estática; mesma origem, porta 3000.</div><span class="arrow">↔</span><div class="node"><b>Node 24 · HTTP nativo</b>auth / events / purchases / partner / operations.</div><span class="arrow">↔</span><div class="node"><b>SQLite · WAL</b>node:sqlite; BEGIN IMMEDIATE; volume Docker.</div></div><div class="callout"><b>Processamento assíncrono:</b> o ingresso guarda o prazo e o resultado esperado. Um worker no processo verifica pagamentos devidos a cada 100ms. Não existe uma fila externa; os jobs são persistidos no SQLite.</div></div>${table(["Tecnologia","Papel em linguagem simples","Escolha e limite"],[["Node.js 24 + ESM","Executa as regras e responde HTTP.","Runtime fixado no container; sem dependências de produção."],["SQLite / node:sqlite","Mantém os registros do produto.","Banco embutido reduz operação; adequado a MVP local de processo único, sem promessa de alta disponibilidade."],["Transações BEGIN IMMEDIATE","Reserva a vez de escrever antes de conferir vagas.","Compra lê e grava na mesma região protegida; todos os escritores relevantes seguem o protocolo."],["Docker / Compose","Empacota o ambiente reproduzível.","Um comando constrói, prepara seed e aguarda saúde; volume preserva dados."],["HTML / CSS / JavaScript","Interface acessada no navegador.","Sem build de frontend; estados e acesso precisam ser validados na interface real."],["Git / GitHub / worktrees","Guarda a história e separa frentes de trabalho.","PRs e commits provam a integração e sobreposição temporal."],["Node test runner","Executa verificações automatizadas.","Gates com saída e código de retorno; não substitui avaliador independente."]])}<p class="small muted" style="margin-top:14px">As alternativas de stack não foram documentadas como experimento comparativo. Não há benchmark que prove superioridade sobre outras tecnologias. ${link("architecture.md","Ver arquitetura e referências primárias")}</p>`);
+body+=section("pitfalls","As armadilhas que mudam o resultado","Dois problemas foram efetivamente encontrados. Os demais abaixo são riscos preventivos derivados do brief.",`<div class="compare"><div>${badge("fail","✕ Encontrado em faa05af")}<h3 style="margin-top:14px">Um teste verde escondia um contrato quebrado</h3><p>O banco aceitou <code>priceCents=1.5</code>. O helper de transação aceitou uma função assíncrona e executou <code>COMMIT</code> antes da mutação.</p><pre>BEGIN IMMEDIATE\nCOMMIT\nasync mutation</pre><p class="small">${link("features/F01/reports/2026-11-26T024324Z-faa05af-evaluation.md","Ler reprovação e probe real")}</p></div><div>${badge("pass","✓ Corrigido em 98c51eb")}<h3 style="margin-top:14px">O banco e o helper passaram a rejeitar o erro</h3><p>Restrições de tipo impõem inteiros. Callbacks async são rejeitados antes da execução; retorno Promise provoca rollback. O avaliador repetiu os probes.</p><pre>EVENT_FRACTION_REJECTED\nASYNC_REJECTED_BEFORE_BEGIN []\nTHENABLE_ROLLBACK</pre><p class="small">${link("features/F01/reports/2026-11-26T024629Z-98c51eb-reevaluation.md","Ler reavaliação aprovada")}</p></div></div><div style="margin-top:20px">${detail("Risco preventivo · duas pessoas compram a última vaga","<p><b>Incorreto:</b> consultar vagas, liberar o banco e só depois inserir. Duas chamadas podem ver o mesmo lugar livre.</p><p><b>Estratégia:</b> adquirir a transação de escrita antes da consulta e inserir pending sob o mesmo lock. Prova oficial: dois eventos novos, 30 compras simultâneas e exatamente 5 respostas 202 / 25 respostas 409 por evento.</p>")}${detail("Risco preventivo · resposta de pagamento chega depois do cancelamento","<p><b>Incorreto:</b> confirmar o ingresso só porque o gateway disse sim.</p><p><b>Estratégia:</b> atualizar somente ingressos ainda pendentes de eventos não cancelados. O fluxo oficial aguarda mais de 45s para confirmar que não houve reversão.</p>")}${detail("Risco preventivo · painel calcula uma história diferente","<p><b>Incorreto:</b> multiplicar vendidos pelo preço atual ou contar estorno como receita.</p><p><b>Estratégia:</b> somar preço histórico apenas dos confirmados. O cenário oficial exige R$350 com compras de R$100, R$100 e R$150.</p>")}${detail("Risco preventivo · validações corretas em ordem errada","<p>Na API: chave → corpo → evento → vagas. No check-in: código inválido/outro evento → evento cancelado → não confirmado → já utilizado → entrada liberada. A precedência também é parte do contrato.</p>")}${detail("Risco preventivo · a prova de processo é criada tarde demais","<p>Agentes apenas “ligados ao mesmo tempo” não bastam. Os intervalos reais dos commits devem se sobrepor. Relatórios commitados não podem ser reescritos para apagar uma reprovação.</p>")}</div>`);
+body+=section("ai","Como a IA participou","Responsabilidades separadas, contexto de avaliação isolado e evidências auditáveis.",`<div class="grid two">${D.agents.map(a=>card(esc(a.name),`<p>${esc(a.role)}</p><p class="small">${link(a.evidence,"Evidência / responsabilidade")}</p>`)).join("")}</div><div class="callout"><b>Ferramenta registrada:</b> Codex desktop. O relatório independente F01 identifica GPT-6 e informa que a variante exata não foi exposta pela sessão. Não inferimos modelos diferentes nem simulamos agentes inexistentes.</div><div class="grid two">${card("Participação humana","<p>O aluno forneceu o brief, o prompt mestre, o repositório e o contexto do ambiente. O desenvolvimento registrado foi executado por agentes. Este relatório prepara o aluno para compreender e defender a solução sem atribuir a si tarefas feitas exclusivamente pela IA.</p>")}${card("Por que separar avaliação","<p>Quem implementa tende a confirmar sua própria intenção. O avaliador recebeu requisitos e checkout, executou probes e reprovou um item que os testes existentes não detectavam.</p>")}</div>`);
+body+=section("timeline","A jornada, sustentada pelo Git","A linha do tempo usa registros reais. Horários de commits e fechamento de relatórios mantêm seus fusos indicados.",`<div class="timeline">${D.timeline.map(t=>`<article class="milestone"><time>${esc(t.time)}</time><h3 style="margin:5px 0">${esc(t.title)}</h3><code class="small">${esc(t.commit)}</code><p>${esc(t.text)}</p></article>`).join("")}</div><h3>Paralelismo demonstrável</h3>${table(["PR","Primeiro commit","Último commit","Situação"],D.prs.map(p=>[link(D.project.repo+"/pull/"+p.number,"#"+p.number+" · "+p.name),esc(p.first),esc(p.last),esc(p.status)]))}<div class="callout"><b>Wave 2:</b> 23:41:42 &lt; 23:43:38 e 23:42:20 &lt; 23:43:18. Portanto, o primeiro commit de cada PR ocorreu antes do último commit do outro. F02 e F03 tiveram branches/worktrees e agentes separados. Essa é a prova exigida pelo desafio.</div><p class="small muted">Não usamos timestamps para afirmar duração total de trabalho ou produtividade. Os marcos de integração, testes finais, auditoria e entrega serão adicionados quando concluídos.</p>`);
+body+=section("demonstration","Demonstração do resultado","Somente resultados reais. Diagramas neste relatório são explicações, não screenshots do produto.",D.screenshots.length?`<div class="grid two">${D.screenshots.map(s=>`<figure class="card"><a href="${esc(s.src)}"><img src="${esc(s.src)}" alt="${esc(s.alt)}" style="width:100%;height:auto;border-radius:6px"></a><figcaption>${esc(s.caption)}</figcaption></figure>`).join("")}</div>`:`<div class="placeholder"><div class="symbol" aria-hidden="true">▧</div><h3>Galeria aguardando a interface real</h3><p class="muted">Screenshots da vitrine, compra, ingressos e gestão ainda não foram capturados.<br>Nenhuma imagem artificial foi usada para representar uma funcionalidade pronta.</p>${badge("pending","◷ Evidência visual pendente")}</div><div class="grid two" style="margin-top:18px">${card("Resultado real de infraestrutura",`<p>O avaliador obteve resposta HTTP 200 em um clone limpo:</p><pre>{"status":"ok"}</pre><p class="small">${link("features/F01/reports/2026-11-26T024629Z-98c51eb-reevaluation.md","Comandos e saídas completos")}</p>`) }${card("Reinício realmente verificado","<p>O comando de encerramento removeu container/rede, a porta recusou conexão e uma nova subida preservou as três contas da seed sem duplicação.</p><p class='small'>Esta evidência pertence à F01 no SHA 98c51eb; não prova a jornada de compra.</p>")}</div>`);
+body+=section("tests","Dashboard de testes e avaliação","Cada número identifica sua execução. Contagens de rodadas diferentes não são somadas como testes únicos.",`<div class="grid four">${card("Gates arquivados",`<div class="metric">${D.tests.latestArchived.total}</div><span class="small muted">testes no SHA ${esc(D.tests.latestArchived.commit)}</span>`)}${card("Aprovados",`<div class="metric">${D.tests.latestArchived.passed}</div>${badge("pass","✓ Execução arquivada")}`)}${card("Reprovados",`<div class="metric">${D.tests.latestArchived.failed}</div><span class="small muted">nessa execução de testes</span>`)}${card("Ignorados",`<div class="metric">${D.tests.latestArchived.skipped}</div><span class="small muted">nessa execução de testes</span>`)}</div><div class="bar" role="img" aria-label="${D.tests.latestArchived.passed} de ${D.tests.latestArchived.total} testes passaram nesta execução"><span style="width:${100*D.tests.latestArchived.passed/D.tests.latestArchived.total}%"></span></div><p class="small">${link(D.tests.latestArchived.source,"Abrir saída integral dos gates")}. Isso não significa 100% dos requisitos aprovados.</p><div class="callout warning"><b>Execução posterior comunicada:</b> ${D.tests.reportedLatest.total} testes, ${D.tests.reportedLatest.passed} aprovados. ${esc(D.tests.reportedLatest.source)}</div>${table(["Categoria","Situação","Limite da evidência"],D.tests.categories.map(r=>r.map(esc)))}<p class="small muted" style="margin-top:14px">A primeira avaliação de F01 teve dois testes automatizados passando e um item contratual reprovado. Após a correção: três testes passando e seis itens contratuais aprovados. Testes e itens de contrato são unidades diferentes.</p>`);
+body+=section("requirements","Matriz visual de conformidade","Pedido → solução → teste → evidência → resultado. Esta fotografia mantém o julgamento global pendente até a auditoria final.",`<div class="filters"><label class="sr-only" for="requirementSearch">Buscar requisito</label><input id="requirementSearch" type="search" placeholder="Buscar R07, concorrência, API, seed…"><label class="sr-only" for="statusFilter">Filtrar status</label><select id="statusFilter"><option value="">Todos os status</option><option value="pass">Aprovado</option><option value="fail">Reprovado</option><option value="pending">Pendente</option><option value="blocked">Bloqueado</option></select><label class="sr-only" for="ownerFilter">Filtrar feature</label><select id="ownerFilter"><option value="">Todas as features</option>${D.features.map(f=>`<option value="${f.id}">${f.id}</option>`).join("")}<option value="Complementar">Complementar</option><option value="Global">Global</option></select></div><p class="small muted" id="requirementCount" aria-live="polite"></p><div id="requirementsTable"></div><p class="small muted">${D.project.requirementsCount} ${esc(D.project.requirementsUnit)}. Conformidade global: ${D.project.conformity===null?"não consolidada":esc(D.project.conformity)+"%"}. Evidências parciais da F01 continuam válidas para seu SHA, sem antecipar a aprovação da main final.</p>`);
+body+=section("security","Segurança e consistência","A proteção relevante é a que pode ser observada. Não há alegação de auditoria de segurança completa nesta etapa.",`<div class="grid two">${card("Controles com evidência independente F01","<ul><li>Dinheiro fracionário rejeitado no banco.</li><li>Códigos e IDs duplicados rejeitados.</li><li>Referência inválida a evento rejeitada.</li><li>Rollback restaura a operação com erro.</li><li>Schema sem coluna de cartão completo.</li></ul>")}${card("Controles que exigem validação integrada","<ul><li>Sessão e acesso por papel/proprietário.</li><li>Proteção da URL direta de gestão.</li><li>Mesma reserva para vitrine e parceiros.</li><li>Callback tardio sem reverter cancelamento.</li><li>Texto de evento sem execução de markup.</li></ul>")}</div><p class="muted" style="margin-top:18px">O produto é local e usa credenciais demonstrativas. Gateway real, notificações, alta disponibilidade e deploy estão fora do escopo. O relatório não publica tokens de acesso, hashes de senha ou cartões de pessoas reais.</p>`);
+body+=section("concepts","Conceitos do MBA aplicados","A teoria aparece em decisões e artefatos concretos.",table(["Conceito do enunciado","Explicação simples","Aplicação e evidência"],[["Spec-Driven Development","Definir o que precisa valer antes de programar.","PRD, spec, plano e contrato para seis features; "+link("PRD.md","ver critérios")],["Consumes / Provides","Explicitar o acordo entre uma parte e outra.","DAG, dez arestas com CF01–CF10 e integração diferida CF11."],["Waves e desenvolvimento paralelo","Executar juntas apenas frentes preparadas para isso.","F02/F03 em branches/worktrees separadas; PRs #1/#2."],["Harness Engineering","Dar a agentes e avaliadores um ambiente reproduzível.","up/down/gates, seed idempotente e "+link("../AGENTS.md","AGENTS.md")],["Self-evaluation bias","Quem fez algo pode não perceber suas falhas.","Avaliador independente reprovou F01; correção e novo relatório."],["Estado e evidências persistentes","Permitir retomada sem depender da conversa.","state.json, relatórios imutáveis e logs no repositório."]]));
+body+=section("artifacts","GitHub e entregáveis","O relatório ajuda a compreender. Os arquivos oficiais permanecem separados e auditáveis.",`<div class="grid two">${card("Artefatos do projeto",D.artifacts.slice(0,8).map(a=>`<a class="artifact" href="${esc(a.href)}"><strong>${esc(a.name)} ↗</strong><span>${esc(a.desc)}</span></a>`).join(""))}${card("Evidências e contratos",D.artifacts.slice(8).map(a=>`<a class="artifact" href="${esc(a.href)}"><strong>${esc(a.name)} ↗</strong><span>${esc(a.desc)}</span></a>`).join("")+D.features.map(f=>`<a class="artifact" href="features/${f.id}/contract.md"><strong>${f.id} · contrato</strong><span>Itens verificáveis e mapeamento ao PRD.</span></a>`).join(""))}</div><div class="callout"><b>Entrega ao professor:</b> endereço do repositório público, branch main, com README, PRD, specs/planos/contratos, relatórios, estado, harness e PRs exigidos. <b>Complementar:</b> este HTML didático. Não houve envio automático ao professor.</div>`);
+body+=section("execute","Como executar e demonstrar","Comandos reais do README. O fluxo completo de apresentação deve aguardar a conclusão da interface e da auditoria.",`<p>Pré-requisitos: Git, Node.js LTS e Docker com Compose iniciado. Linux/macOS; desenvolvimento Windows via WSL.</p><h3>1. Obter e iniciar</h3>${command("git clone https://github.com/trvalle/MBA-desafio_produto_em_modo_agente.git\ncd MBA-desafio_produto_em_modo_agente\nnpm run up")}<p class="small muted">Constrói o container, prepara schema/seed e aguarda saúde. O harness foi validado em clone limpo na F01; o clone remoto final ainda será reavaliado.</p><h3>2. Acessar</h3><p>Produto e API em ${link("http://localhost:3000","http://localhost:3000")}. Contas demonstrativas e chave de parceiro estão no ${link("../README.md","README")}. A interface ainda está pendente nesta fotografia.</p><h3>3. Rodar gates</h3>${command("npm run gates")}<p class="small muted">Executa testes em container descartável com banco isolado. Guardar saída e commit; não contar um teste não executado como aprovado.</p><h3>4. Encerrar</h3>${command("npm run down")}<p class="small muted">Encerra os serviços do projeto e preserva dados. A avaliação confirma ausência de container ativo e de resposta na porta, depois repete a subida.</p>${detail("Roteiro oficial de demonstração — a executar integralmente","<ol><li>Criar evento draft, testar data inválida e publicar.</li><li>Comprar pela vitrine e API, observar pending, recusa, confirmação e esgotado.</li><li>Alterar preço/capacidade e conferir receita histórica de R$350.</li><li>Exercitar todas mensagens de check-in e isolamento entre organizadores.</li><li>Cancelar com pagamento lento pendente e verificar estados após 45s.</li><li>Disparar 30 compras em cada um de dois eventos de capacidade 5.</li><li>Validar erros da API, gates, down/up e documentação/PRs.</li></ol><p>Este resumo não substitui a ordem e os dados dos 18 passos do brief.</p>")}`);
+body+=section("defense","Preparação para a apresentação","Explicar o raciocínio e os limites é mais importante que recitar nomes de tecnologias.",`${detail("Resumo do desafio · 30 segundos","<p>“A Catraca vende ingressos de eventos pequenos. O desafio é fazer compra, pagamento, check-in, cancelamento e painel concordarem, mesmo com ações simultâneas. Além do produto, precisamos demonstrar especificações conectadas, uma wave realmente paralela e avaliação independente. O estado desta fotografia ainda é de desenvolvimento.”</p>")}${detail("Explicação da solução · 1 minuto","<p>“O projeto foi dividido em seis features. Uma fundação comum cuida de ambiente e banco. Autenticação e eventos foram desenvolvidos em paralelo, integrados por PRs. A compra reserva uma vaga antes de esperar o pagamento. O banco serializa a decisão de reservar, para evitar vender o mesmo lugar duas vezes. Os próximos módulos conectam cancelamento, check-in, painel e interface. A avaliação independente já encontrou problemas que testes verdes não detectavam e exigiu correção. Só o fluxo completo na versão final pode sustentar a aprovação global.”</p>")}${detail("Roteiro de aproximadamente 5 minutos","<ol class='presentation'><li><b>0:00–0:40 · Contexto:</b> quem usa e por que recursos isolados não bastam.</li><li><b>0:40–1:30 · Jornada:</b> reserva pendente, pagamento, ingresso, check-in e cancelamento.</li><li><b>1:30–2:20 · Arquitetura:</b> navegador, servidor, banco e transação; preço histórico.</li><li><b>2:20–3:10 · Processo:</b> PRD, contratos, wave paralela e PRs com sobreposição real.</li><li><b>3:10–4:15 · Evidência:</b> mostrar FAIL→correção→PASS da F01 e resultados reais dos testes disponíveis.</li><li><b>4:15–5:00 · Resultado e limites:</b> apresentar status atual com honestidade; após conclusão, substituir pendências por evidências finais.</li></ol>")}${detail("Perguntas prováveis do professor","<p><b>Como você impede overselling?</b> A transação de escrita começa antes de ler vagas. A inserção pending ocorre sob o mesmo lock. A prova exigida é a rajada concorrente em dois eventos novos.</p><p><b>Por que pending ocupa vaga?</b> O brief exige reserva desde a criação, antes da resposta do gateway.</p><p><b>Por que checkedIn não é status?</b> O pagamento continua confirmado após entrada. Check-in é informação adicional; um ingresso estornado não deve contar no painel de entradas confirmadas.</p><p><b>Por que SQLite?</b> O escopo é um MVP local. Banco embutido e runtime único reduzem operação; não estamos prometendo escala distribuída.</p><p><b>Quem avaliou?</b> Um agente distinto, com contexto inicial vazio, que produziu relatórios novos e evidências por item.</p><p><b>Testes passando provam tudo?</b> Não. F01 tinha testes verdes e recebeu reprovação contratual. O fluxo oficial e auditoria documental são necessários.</p><p><b>O que você, aluno, fez?</b> Descrever com honestidade sua participação no fornecimento do brief e acompanhamento; os agentes executaram as atividades registradas. Demonstrar compreensão sem atribuição falsa de autoria.</p>")}${detail("Glossário de bolso",table(["Termo","Em linguagem simples"],[["API","Uma porta com formato combinado para outro sistema conversar com o produto."],["Backend","A parte que aplica regras e controla os dados."],["Frontend","A parte visível com a qual a pessoa interage."],["Transação","Um grupo de mudanças que acontece por inteiro ou é desfeito."],["Concorrência","Várias ações chegando ao mesmo tempo."],["Worker","Uma rotina que processa trabalho pendente depois da resposta inicial."],["Seed","Dados iniciais de demonstração inseridos de modo repetível."],["Container","Um pacote executável com ambiente conhecido."],["Gate","Uma verificação que precisa passar antes de avançar."],["Commit","Uma versão identificada no histórico."],["PR","Uma proposta de integração de mudanças no GitHub."],["Worktree","Uma pasta Git adicional para trabalhar numa branch separada."],["Critério cross-feature","Uma prova de que a saída de uma parte funciona na outra."],["Rollback","Desfazer alterações de uma transação que falhou."]]))}`);
+body+=section("result","Resultado e próximos passos","O veredito expressa a conformidade observada, não uma previsão de nota.",`<div class="card"><span class="label ${D.project.verdict.startsWith("APPROVED")?"pass":"pending"}">${esc(D.project.verdict)}</span><h3 style="margin-top:18px">${esc(D.project.status)}</h3><p>${esc(D.project.verdictReason)}</p><div class="grid two"><div><b>Conformidade comprovada</b><p>${D.project.conformity===null?"Percentual ainda não consolidado.":esc(D.project.conformity)+"%"} ${D.project.requirementsCount} grupos mapeados; não há aprovação global implícita.</p></div><div><b>Commit desta fotografia</b><p><code>${esc(D.project.snapshotCommit)}</code>, branch ${esc(D.project.branch)}. Data de conclusão: ${D.project.conclusionDate?esc(D.project.conclusionDate):"ainda não disponível"}.</p></div></div></div><div class="grid two" style="margin-top:18px">${card("Trabalho restante","<p>Finalizar operações e interface; avaliar cada feature; executar o fluxo oficial e gates no clone limpo da main; auditar relatórios, PRs e estado; capturar screenshots; atualizar e validar este material.</p>")}${card("Limites e riscos residuais",`<ul>${D.validation.limitations.map(x=>`<li>${esc(x)}</li>`).join("")}</ul><p>Não há cobertura de código coletada nem métrica de melhoria de desempenho. Ausência de medição não foi substituída por estimativa.</p>`)}</div><h3 style="margin-top:24px">Validação deste HTML</h3><p id="htmlValidation">${esc(D.validation.status)}</p>${D.validation.checks.length?table(["Verificação","Resultado","Evidência"],D.validation.checks.map(c=>c.map(esc))):"<p class='muted'>Checklist de carregamento, links, JavaScript, filtros, tema, modo de leitura, responsividade e impressão ainda pendente.</p>"}<p class="small">Para abrir: arquivo <code>docs/relatorio-final.html</code> no repositório. Não precisa iniciar o produto. Links de evidência exigem os arquivos vizinhos; GitHub e produto local exigem seus respectivos serviços.</p>`);
+document.getElementById("reportSections").innerHTML=body;
+document.getElementById("navigation").innerHTML=`<a href="#overview">Visão geral</a>`+sections.map(s=>`<a href="#${s.id}">${esc(s.title)}</a>`).join("");
+document.getElementById("validationFooter").textContent="Validação do HTML: "+D.validation.status+".";
+function renderRequirements(){
+ const term=document.getElementById("requirementSearch").value.toLocaleLowerCase("pt-BR");
+ const status=document.getElementById("statusFilter").value;
+ const owner=document.getElementById("ownerFilter").value;
+ const found=D.requirements.filter(r=>(!term||[r.id,r.description,r.criteria,r.owner,r.source].join(" ").toLocaleLowerCase("pt-BR").includes(term))&&(!status||r.status===status)&&(!owner||r.owner.includes(owner)));
+ document.getElementById("requirementCount").textContent=found.length+" de "+D.requirements.length+" grupos exibidos";
+ document.getElementById("requirementsTable").innerHTML=found.length?table(["Requisito / origem","Solução e teste","Evidência e resultado"],found.map(r=>[`<b>${esc(r.id)}</b><p class="small muted">${esc(r.source)}</p><span class="small">${esc(r.owner)}</span>`,`<p>${esc(r.description)}</p><code class="small">${esc(r.criteria)}</code>`,`${badge(r.status)}<p class="small">${esc(r.result)}</p>${link(r.evidence,"Abrir referência")}`])):"<p class='empty'>Nenhum requisito corresponde aos filtros.</p>";
+}
+["requirementSearch","statusFilter","ownerFilter"].forEach(id=>document.getElementById(id).addEventListener("input",renderRequirements));renderRequirements();
+function setTheme(v){document.documentElement.dataset.theme=v;const b=document.getElementById("themeButton");b.textContent=v==="dark"?"Tema claro":"Tema escuro";b.setAttribute("aria-pressed",String(v==="dark"));try{localStorage.setItem("catraca-report-theme",v)}catch{}}
+try{const stored=localStorage.getItem("catraca-report-theme");if(stored==="dark")setTheme("dark")}catch{}
+document.getElementById("themeButton").onclick=()=>setTheme(document.documentElement.dataset.theme==="dark"?"light":"dark");
+document.getElementById("modeButton").onclick=()=>{const technical=document.documentElement.dataset.mode!=="technical";document.documentElement.dataset.mode=technical?"technical":"simple";const b=document.getElementById("modeButton");b.textContent=technical?"Leitura: técnico":"Leitura: leigo";b.setAttribute("aria-pressed",String(technical));};
+document.getElementById("printButton").onclick=()=>window.print();
+let openDetails=[];
+window.addEventListener("beforeprint",()=>{openDetails=[...document.querySelectorAll("details")].filter(x=>x.open);document.querySelectorAll("details").forEach(x=>x.open=true)});
+window.addEventListener("afterprint",()=>document.querySelectorAll("details").forEach(x=>x.open=openDetails.includes(x)));
+document.addEventListener("click",async e=>{const b=e.target.closest("[data-copy]");if(!b)return;try{if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(b.dataset.copy)}else{const t=document.createElement("textarea");t.value=b.dataset.copy;document.body.append(t);t.select();if(!document.execCommand("copy"))throw Error("copy failed");t.remove()}b.textContent="Copiado ✓";setTimeout(()=>b.textContent="Copiar",1800)}catch{b.textContent="Selecione o comando";b.parentElement.querySelector("pre").setAttribute("tabindex","0");b.parentElement.querySelector("pre").focus()}});
+if("IntersectionObserver" in window){const observer=new IntersectionObserver(entries=>{for(const entry of entries)if(entry.isIntersecting){document.querySelectorAll("nav a").forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+entry.target.id))}},{rootMargin:"-10% 0px -75% 0px"});document.querySelectorAll("main section").forEach(s=>observer.observe(s))}
+window.CATRACA_REPORT={data:D,renderRequirements};
+})();
+</script>
+</body></html>
+
