@@ -122,7 +122,8 @@ try {
   assert.equal((await ticket(t6.ticketId)).status,'refunded');assert.equal((await ticket(t5.ticketId)).status,'cancelled');
   await page.goto(base+'/');assert.equal(await page.getByRole('article',{name:e3.name,exact:true}).count(),0);
   await page.goto(base+`/organizer/events/${e3.id}`);
-  assert.equal(await page.getByRole('button',{name:'Salvar alterações',exact:true}).isEnabled().catch(()=>false),false);record(13,'Cancelamento imediato: retirado da API, compra404, refunded/cancelled e edição bloqueada.');
+  const disabledEdit=page.getByRole('button',{name:'Salvar alterações',exact:true});
+  assert.ok(await disabledEdit.count()===0 || !(await disabledEdit.isEnabled()));record(13,'Cancelamento imediato: retirado da API, compra404, refunded/cancelled e edição bloqueada.');
   await sleep(Math.max(0,45000-(Date.now()-t5Start)));assert.equal((await ticket(t5.ticketId)).status,'cancelled');await page.reload();await page.getByText('Evento cancelado',{exact:true}).first().waitFor();
   await metric('confirmed',0);await metric('pending',0);await metric('checkedIn',0);await metric('availableSeats',0);await metric('revenueCents','R$ 0,00');await metric('refunded',1);await shot('04-cancelamento');record(14,'Callback tardio não ressuscita ingresso; painel cancelado correto após45s.');
   for(const label of ['E4','E5']){const e=await createEvent(label,5,10);
