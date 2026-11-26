@@ -1,7 +1,10 @@
 # Catraca — do brief ao produto em modo agente
 
 MVP local de venda de ingressos, construído com especificações e avaliação independente.
-Consulte o [estado e os relatórios independentes](docs/state.json) para o estágio comprovado da entrega.
+**APPROVED — READY FOR SUBMISSION**, conforme [auditoria independente](docs/evidence/final-audit-feb98bf.md):
+39/39 grupos acadêmicos, 49/49 itens dos contratos e seis features aprovadas. Gates: 30 testes aprovados.
+O fluxo oficial foi executado em clone limpo com navegador real. Consulte o [estado](docs/state.json) e
+o [relatório didático offline](docs/relatorio-final.html), com telas reais e roteiro de apresentação.
 
 ## Como rodar
 

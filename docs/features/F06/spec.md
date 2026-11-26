@@ -24,7 +24,7 @@ SPA estática HTML/CSS/JS servida pelo Node com fallback para rotas de interface
 - F06-AC04: Gestão apresenta painel, check-in e cancelamento com mensagens literais e ações bloqueadas após cancelar (R10–R12).
 - F06-AC05: Acesso direto à gestão alheia não renderiza nome/números/ingressos para organizador B, participante ou visitante (R13).
 - F06-AC06: Dados não confiáveis são renderizados como texto; navegação funciona em reload de URL direta e status usa rótulos PT-BR.
-- F06-AC07: Fluxo oficial completo passa na main em clone limpo e gera evidências reais, incluindo UI, API, concorrência, restart e artefatos.
+- F06-AC07: Passos 1–17 do fluxo oficial passam na main em clone limpo, com UI, API, concorrência e restart. O passo18 permanece obrigatório na auditoria global posterior aos relatórios e estado, conforme [ADR](../../adr-evaluation-order.md).
 
 Não esperar rede dentro de transações. Não expor segredos, hashes de senha ou cartão completo. Falhas devem ser observáveis, sem alterar parcialmente estado. Contratos fixos da API e mensagens de negócio seguem o brief literalmente.
 

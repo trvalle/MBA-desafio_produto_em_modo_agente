@@ -2,9 +2,9 @@
 
 ## Fonte, classificação e uso
 
-Fonte principal: [brief.md](brief.md), lido integralmente. Prompt mestre fornecido pelo aluno adiciona auditoria, rastreabilidade e HTML didático; não altera contratos acadêmicos. IDs R01–R13 preservados; demais IDs são internos. A matriz abaixo é a linha de base de cobertura, não uma aprovação. Evidências obtidas/SHA/status efetivos ficam nos relatórios e no estado; enquanto ausentes, cada linha permanece **PENDENTE**. Não calcular 100% só porque a linha tem um teste previsto.
+Fonte principal: [brief.md](brief.md), lido integralmente. Prompt mestre fornecido pelo aluno adiciona auditoria, rastreabilidade e HTML didático; não altera contratos acadêmicos. IDs R01–R13 preservados; demais IDs são internos. A matriz abaixo preserva a interpretação dos requisitos. O resultado comprovado está na [auditoria independente final](evidence/final-audit-feb98bf-independent.json), nos [relatórios por feature](state.json) e no [relatório didático](relatorio-final.html): **39/39 grupos acadêmicos aprovados**, com **49/49 itens de contrato** aprovados. São agrupamentos rastreáveis, não contagem de testes nem cobertura de linhas de código.
 
-Todas as linhas da matriz são OBRIGATÓRIAS no escopo indicado; HTML é obrigação complementar do aluno, separada do veredito acadêmico. Criticidade alta para regras, contratos, harness, processo e entrega; média para material complementar. Componentes/dependências detalhados no PRD e specs; estratégia/teste na coluna final e contratos. Evidência esperada: saídas reais de comandos, respostas HTTP, observações do navegador, screenshots ou histórico Git conforme o item. Evidência obtida e commit: **a coletar**, com links no relatório mais recente. Esta classificação evita inventar resultados prévios.
+Todas as linhas da matriz são OBRIGATÓRIAS no escopo indicado; os sete grupos adicionais do prompt mestre são separados dos39acadêmicos (R01 até END01). Criticidade alta para regras, contratos, harness, processo e entrega; média para material complementar. Componentes/dependências detalhados no PRD e specs; estratégia/teste na coluna final e contratos. Evidências obtidas: saídas reais, respostas HTTP, navegador/screenshots e histórico Git, com SHA por relatório. Produto integrado avaliado em `2691761de8bf2b006e5775397e5128c603fa2d6f`; artefatos/histórico públicos auditados em `feb98bf3e922f552f1adaf0d9cdc296383351333`. A auditoria comprovou ausência de diferenças no produto entre esses commits.
 
 ## Matriz
 
@@ -67,7 +67,7 @@ Todas as linhas da matriz são OBRIGATÓRIAS no escopo indicado; HTML é obriga�
 
 ## Registro de armadilhas
 
-Estes itens são riscos preventivos identificados no enunciado, não alegações de defeitos encontrados. Resultado/evidência de resolução ficam pendentes até relatório real.
+Estes itens são riscos preventivos identificados no enunciado, não alegações de defeitos encontrados. Sua cobertura foi verificada nos contratos e na auditoria final vinculados acima. Defeitos efetivamente encontrados foram preservados nos relatórios reprovados F01 e F04; suas correções têm reavaliações próprias, sem apagar o histórico.
 
 | ID | Origem / risco | Consequência | Prevenção e teste / evidência |
 |---|---|---|---|

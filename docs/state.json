@@ -1,7 +1,19 @@
 {
   "project": "Catraca",
-  "phase": "final_artifact_audit",
-  "verdict": "REJECTED — CORRECTIONS REQUIRED",
+  "phase": "complete",
+  "verdict": "APPROVED — READY FOR SUBMISSION",
+  "validation": {
+    "productCommit": "2691761de8bf2b006e5775397e5128c603fa2d6f",
+    "artifactAuditCommit": "feb98bf3e922f552f1adaf0d9cdc296383351333",
+    "academicGroups": {"passed":39,"total":39},
+    "contractItems": {"passed":49,"total":49},
+    "automatedTests": {"passed":30,"failed":0,"skipped":0},
+    "complementaryGroups": {"passed":7,"total":7},
+    "postDocumentationValidation": "docs/evidence/post-documentation-validation.md",
+    "finalAudit": "docs/evidence/final-audit-feb98bf.md",
+    "officialJourney": "docs/evidence/eval-ui-final-2691761/results.json",
+    "learningReport": "docs/relatorio-final.html"
+  },
   "features": [
     {"id":"F01","status":"completed","latestReport":"docs/features/F01/reports/2026-11-26T024629Z-98c51eb-reevaluation.md"},
     {"id":"F02","status":"completed","latestReport":"docs/features/F02/reports/2026-11-26T024651Z-37aae3f-independent.md"},
@@ -10,6 +22,6 @@
     {"id":"F05","status":"completed","latestReport":"docs/features/F05/reports/20261126-independent-2691761-sales-ops.md"},
     {"id":"F06","status":"completed","latestReport":"docs/features/F06/reports/20261126-independent-2691761-ui-final.md"}
   ],
-  "nextAction": "Auditar passo18 no estado consolidado, finalizar HTML e publicar main validada.",
+  "nextAction": "Entregar ao professor a URL pública do repositório, branch main; consultar o HTML para preparar a apresentação.",
   "blockers": []
 }

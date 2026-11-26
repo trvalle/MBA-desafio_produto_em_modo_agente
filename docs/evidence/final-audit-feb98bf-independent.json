@@ -1,0 +1,168 @@
+{
+  "at": "2026-11-26T03:06:47.061Z",
+  "sha": "feb98bf3e922f552f1adaf0d9cdc296383351333",
+  "remote": "feb98bf3e922f552f1adaf0d9cdc296383351333",
+  "features": [
+    {
+      "id": "F01",
+      "items": 6,
+      "report": "docs/features/F01/reports/2026-11-26T024629Z-98c51eb-reevaluation.md",
+      "status": "PASS"
+    },
+    {
+      "id": "F02",
+      "items": 6,
+      "report": "docs/features/F02/reports/2026-11-26T024651Z-37aae3f-independent.md",
+      "status": "PASS"
+    },
+    {
+      "id": "F03",
+      "items": 8,
+      "report": "docs/features/F03/reports/20261126-independent-2691761-sales-ops.md",
+      "status": "PASS"
+    },
+    {
+      "id": "F04",
+      "items": 9,
+      "report": "docs/features/F04/reports/20261126-independent-2691761-sales-ops.md",
+      "status": "PASS"
+    },
+    {
+      "id": "F05",
+      "items": 9,
+      "report": "docs/features/F05/reports/20261126-independent-2691761-sales-ops.md",
+      "status": "PASS"
+    },
+    {
+      "id": "F06",
+      "items": 11,
+      "report": "docs/features/F06/reports/20261126-independent-2691761-ui-final.md",
+      "status": "PASS"
+    }
+  ],
+  "itemsTotal": 49,
+  "histories": [
+    {
+      "path": "docs/features/F01/reports/2026-11-26T024324Z-faa05af-evaluation.md",
+      "commits": [
+        "8baa03d44bf03b930d5c1a90a831fc0b7c433b3c"
+      ],
+      "evaluatedCommit": "faa05af785ad2a16012a8c624edf2e25981a55aa"
+    },
+    {
+      "path": "docs/features/F01/reports/2026-11-26T024629Z-98c51eb-reevaluation.md",
+      "commits": [
+        "1e0f42b3c50c98b48a2b75783edbb80100c6c37b"
+      ],
+      "evaluatedCommit": "98c51eba2e6231bc73bc68c2c1b5618ec0ff2fa3"
+    },
+    {
+      "path": "docs/features/F02/reports/2026-11-26T024651Z-37aae3f-independent.md",
+      "commits": [
+        "5156cc89e6f7df59dad36bc4a97c851104aef5c7"
+      ],
+      "evaluatedCommit": "37aae3fc15f3423f88806c6cc824cd0435088259"
+    },
+    {
+      "path": "docs/features/F03/reports/2026-11-26T024651Z-37aae3f-independent.md",
+      "commits": [
+        "5156cc89e6f7df59dad36bc4a97c851104aef5c7"
+      ],
+      "evaluatedCommit": "37aae3fc15f3423f88806c6cc824cd0435088259"
+    },
+    {
+      "path": "docs/features/F03/reports/20261126-independent-2691761-sales-ops.md",
+      "commits": [
+        "cb3d48320f07aeba512485ddc9a3e0f4da74bfb6"
+      ],
+      "evaluatedCommit": "2691761de8bf2b006e5775397e5128c603fa2d6f"
+    },
+    {
+      "path": "docs/features/F03/reports/20261126-independent-95ecfd3-sales-ops.md",
+      "commits": [
+        "05e14f41cca8edc866e500942f9c73ed56ac9cf5"
+      ],
+      "evaluatedCommit": "95ecfd3fca730b3dd1c1e14a7e09abd40b2bf6b0"
+    },
+    {
+      "path": "docs/features/F04/reports/20261126-independent-2691761-sales-ops.md",
+      "commits": [
+        "cb3d48320f07aeba512485ddc9a3e0f4da74bfb6"
+      ],
+      "evaluatedCommit": "2691761de8bf2b006e5775397e5128c603fa2d6f"
+    },
+    {
+      "path": "docs/features/F04/reports/20261126-independent-95ecfd3-sales-ops.md",
+      "commits": [
+        "05e14f41cca8edc866e500942f9c73ed56ac9cf5"
+      ],
+      "evaluatedCommit": "95ecfd3fca730b3dd1c1e14a7e09abd40b2bf6b0"
+    },
+    {
+      "path": "docs/features/F05/reports/20261126-independent-2691761-sales-ops.md",
+      "commits": [
+        "cb3d48320f07aeba512485ddc9a3e0f4da74bfb6"
+      ],
+      "evaluatedCommit": "2691761de8bf2b006e5775397e5128c603fa2d6f"
+    },
+    {
+      "path": "docs/features/F05/reports/20261126-independent-95ecfd3-sales-ops.md",
+      "commits": [
+        "05e14f41cca8edc866e500942f9c73ed56ac9cf5"
+      ],
+      "evaluatedCommit": "95ecfd3fca730b3dd1c1e14a7e09abd40b2bf6b0"
+    },
+    {
+      "path": "docs/features/F06/reports/20261126-independent-2691761-ui-final.md",
+      "commits": [
+        "feb98bf3e922f552f1adaf0d9cdc296383351333"
+      ],
+      "evaluatedCommit": "2691761de8bf2b006e5775397e5128c603fa2d6f"
+    }
+  ],
+  "academicIds": [
+    "R01",
+    "R02",
+    "R03",
+    "R04",
+    "R05",
+    "R06",
+    "R07",
+    "R08",
+    "R09",
+    "R10",
+    "R11",
+    "R12",
+    "R13",
+    "ACT01",
+    "STS01",
+    "GW01",
+    "GW02",
+    "API01",
+    "API02",
+    "API03",
+    "API04",
+    "API05",
+    "API06",
+    "HAR01",
+    "HAR02",
+    "HAR03",
+    "HAR04",
+    "HAR05",
+    "ENV01",
+    "DOC01",
+    "DOC02",
+    "DOC03",
+    "PAR01",
+    "EVA01",
+    "EVA02",
+    "STA01",
+    "DEL01",
+    "DEL02",
+    "END01"
+  ],
+  "academicCount": 39,
+  "runtimeDiff": "",
+  "reportsRemoved": "",
+  "verdict": "PASS"
+}

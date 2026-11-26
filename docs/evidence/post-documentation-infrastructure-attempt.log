@@ -1,0 +1,5 @@
+
+> catraca@1.0.0 gates
+> node scripts/compose.js gates
+
+spawnSync docker EIO
