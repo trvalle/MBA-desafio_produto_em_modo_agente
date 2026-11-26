@@ -120,11 +120,17 @@ try {
   const cancellation=page.waitForResponse(r=>r.url().endsWith('/cancel'));await page.getByRole('button',{name:'Cancelar evento',exact:true}).click();assert.equal((await cancellation).status(),200);assert.ok(Date.now()-t5Start<30000);record(12,'E3 cancelado com ingresso confirmado e outro pendente lento.');
   assert.ok(!(await api('/api/partner/events')).body.some(e=>e.id===e3.id));assert.equal((await api(`/api/partner/events/${e3.id}/purchases`,'POST',{buyerEmail:'x@example.com',cardNumber:card('0001')})).status,404);
   assert.equal((await ticket(t6.ticketId)).status,'refunded');assert.equal((await ticket(t5.ticketId)).status,'cancelled');
+  await page.goto(base+'/');assert.equal(await page.getByRole('article',{name:e3.name,exact:true}).count(),0);
+  await page.goto(base+`/organizer/events/${e3.id}`);
   assert.equal(await page.getByRole('button',{name:'Salvar alterações',exact:true}).isEnabled().catch(()=>false),false);record(13,'Cancelamento imediato: retirado da API, compra404, refunded/cancelled e edição bloqueada.');
   await sleep(Math.max(0,45000-(Date.now()-t5Start)));assert.equal((await ticket(t5.ticketId)).status,'cancelled');await page.reload();await page.getByText('Evento cancelado',{exact:true}).first().waitFor();
   await metric('confirmed',0);await metric('pending',0);await metric('checkedIn',0);await metric('availableSeats',0);await metric('revenueCents','R$ 0,00');await metric('refunded',1);await shot('04-cancelamento');record(14,'Callback tardio não ressuscita ingresso; painel cancelado correto após45s.');
-  for(const label of ['E4','E5']){const e=await createEvent(label,5,10);const responses=await Promise.all(Array.from({length:30},(_,i)=>api(`/api/partner/events/${e.id}/purchases`,'POST',{buyerEmail:`carga${i}@example.com`,cardNumber:card('0001')})));
-    assert.equal(responses.filter(r=>r.status===202).length,5);assert.equal(responses.filter(r=>r.status===409).length,25);await confirmed(responses.find(r=>r.status===202).body.ticketId);await sleep(150);await page.reload();await metric('confirmed',5);await metric('availableSeats',0);record(`15-${label}`,'30 simultâneas = 5 respostas202 e25 respostas409; painel5/0.');}
+  for(const label of ['E4','E5']){const e=await createEvent(label,5,10);
+    // Literal shell pipeline from the public evaluator; values are passed via environment, not interpolated shell code.
+    const command=`seq 30 | xargs -P 30 -I{} curl -s -o /dev/null -w '%{http_code}\\n' -X POST "$API/api/partner/events/$EVENT/purchases" -H "X-Api-Key: $KEY" -H 'Content-Type: application/json' -d '{"buyerEmail":"carga{}@example.com","cardNumber":"4000000000000001"}' | sort | uniq -c`;
+    const output=execFileSync('bash',['-lc',command],{encoding:'utf8',env:{...process.env,API:base,KEY:key,EVENT:e.id}});
+    writeFileSync(resolve(evidence,`concurrency-${label}.log`),output);assert.match(output,/\b5\s+202\b/);assert.match(output,/\b25\s+409\b/);
+    await sleep(4000);await page.reload();await metric('confirmed',5);await metric('availableSeats',0);record(`15-${label}`,'Pipeline seq/xargs/curl: 30 simultâneas = 5 respostas202 e25 respostas409; painel5/0.');}
   for(const apiKey of [null,'errada'])for(const [path,method,data] of [['/api/partner/events','GET'],[`/api/partner/events/${e1.id}/purchases`,'POST',{}],['/api/partner/tickets/missing','GET']]){
     const response=await api(path,method,data,apiKey);assert.equal(response.status,401);assert.deepEqual(response.body,{error:'unauthorized'});}
   const invalid=await api(`/api/partner/events/${e1.id}/purchases`,'POST',{buyerEmail:'x@example.com',cardNumber:'123'});assert.equal(invalid.status,422);assert.deepEqual(invalid.body,{error:'invalid_request'});
@@ -135,7 +141,8 @@ try {
     await assert.rejects(fetch(base+'/api/health'));
     const ids=execFileSync('docker',['ps','--filter',`label=com.docker.compose.project=${process.env.COMPOSE_PROJECT_NAME||'catraca'}`,'-q'],{encoding:'utf8'}).trim();assert.equal(ids,'');
     writeFileSync(resolve(evidence,'restart.log'),execFileSync('npm',['run','up'],{encoding:'utf8',env:process.env}));
-    await login('organizador.a@catraca.local');record(17,'Gates PASS; down liberou porta e encerrou containers; up e login seed funcionam.');
+    for(const email of ['organizador.a@catraca.local','organizador.b@catraca.local','participante@catraca.local'])await login(email);
+    record(17,'Gates PASS; down liberou porta e encerrou containers; up e login das três contas seed funcionam.');
   } else record('17-pending','Executar lifecycle externo ou RUN_LIFECYCLE=1 para comprovar passo17.');
   await page.setViewportSize({width:390,height:844});await page.goto(base+'/');await shot('05-mobile');
   assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1));
