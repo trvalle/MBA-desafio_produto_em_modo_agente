@@ -1,0 +1,51 @@
+
+> catraca@1.0.0 e2e
+> node scripts/evaluator.mjs
+
+PASS 1: Clone iniciado externamente por npm run up; saúde HTTP 200.
+PASS 2: E1 rascunho ausente da vitrine e API.
+PASS 3: Data passada rejeitada pela interface.
+PASS 4: E1 publicado aparece com 2 vagas e R$100.
+PASS 5: Cadastro e compra UI: pendente, confirmado até 5s, evento/código visíveis.
+PASS 6: Compra lenta pendente ocupa última vaga.
+PASS 7: Antes de 30s: API 409 e UI Ingressos esgotados.
+PASS 8: Recusa libera vaga e T3 confirma.
+PASS 9: Capacidade protegida e painel 3 confirmados / receita histórica R$350.
+PASS 10: Mensagens check-in exatas e painel com uma entrada.
+PASS 11: Isolamento de A/B/participante/visitante e código de outro evento.
+PASS 12: E3 cancelado com ingresso confirmado e outro pendente lento.
+PASS 13: Cancelamento imediato: retirado da API, compra404, refunded/cancelled e edição bloqueada.
+PASS 14: Callback tardio não ressuscita ingresso; painel cancelado correto após45s.
+PASS 15-E4: Pipeline seq/xargs/curl: 30 simultâneas = 5 respostas202 e25 respostas409; painel5/0.
+PASS 15-E5: Pipeline seq/xargs/curl: 30 simultâneas = 5 respostas202 e25 respostas409; painel5/0.
+PASS 16: Três rotas401, cartão inválido422 e ticket inexistente404.
+PASS browser: Nenhum erro JavaScript observado.
+ Image catraca-eval-ui-app Building 
+ Image catraca-eval-ui-app Built 
+ Container catraca-eval-ui-app-run-04ea469c1eb4 Creating 
+ Container catraca-eval-ui-app-run-04ea469c1eb4 Created 
+npm notice
+npm notice New major version of npm available! 11.19.1 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice
+ Container catraca-eval-ui-app-1 Stopping 
+ Container catraca-eval-ui-app-1 Stopped 
+ Container catraca-eval-ui-app-1 Removing 
+ Container catraca-eval-ui-app-1 Removed 
+ Network catraca-eval-ui_default Removing 
+ Network catraca-eval-ui_default Removed 
+ Image catraca-eval-ui-app Building 
+ Image catraca-eval-ui-app Built 
+ Network catraca-eval-ui_default Creating 
+ Network catraca-eval-ui_default Creating 
+ Network catraca-eval-ui_default Created 
+ Network catraca-eval-ui_default Created 
+ Container catraca-eval-ui-app-1 Creating 
+ Container catraca-eval-ui-app-1 Created 
+ Container catraca-eval-ui-app-1 Starting 
+ Container catraca-eval-ui-app-1 Started 
+ Container catraca-eval-ui-app-1 Waiting 
+ Container catraca-eval-ui-app-1 Healthy 
+PASS 17: Gates PASS; down liberou porta e encerrou containers; up e login das três contas seed funcionam.
+PASS responsive: Vitrine 390px sem rolagem horizontal.

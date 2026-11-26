@@ -1,0 +1,110 @@
+
+> catraca@1.0.0 gates
+> node scripts/compose.js gates
+
+#1 [internal] load local bake definitions
+#1 reading from stdin 512B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 390B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:24.22.3-bookworm-slim
+#3 DONE 0.5s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 87B done
+#4 DONE 0.0s
+
+#5 [ 1/10] FROM docker.io/library/node:24.22.3-bookworm-slim@sha256:873f586f3794f52281bd039bf02c048a0be08fde619338f9941bad1eb6b34530
+#5 resolve docker.io/library/node:24.22.3-bookworm-slim@sha256:873f586f3794f52281bd039bf02c048a0be08fde619338f9941bad1eb6b34530 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 385.67kB done
+#6 DONE 0.0s
+
+#7 [ 3/10] COPY package*.json ./
+#7 CACHED
+
+#8 [ 4/10] COPY src ./src
+#8 CACHED
+
+#9 [ 6/10] COPY tests ./tests
+#9 CACHED
+
+#10 [ 2/10] WORKDIR /app
+#10 CACHED
+
+#11 [ 5/10] COPY public ./public
+#11 CACHED
+
+#12 [ 7/10] COPY scripts ./scripts
+#12 CACHED
+
+#13 [ 8/10] COPY docs ./docs
+#13 DONE 0.0s
+
+#14 [ 9/10] COPY AGENTS.md ./
+#14 DONE 0.0s
+
+#15 [10/10] RUN mkdir -p /app/data && chown node:node /app/data
+#15 DONE 0.2s
+
+#16 exporting to image
+#16 exporting layers 0.1s done
+#16 exporting manifest sha256:34982fbfe04051560e07bc3466350d1fc33dd0ad4f2f9c57368dcb2a8d5fb192 done
+#16 exporting config sha256:c2c9eec275cc6b7de43819cedec03819f70d03aff43aa6e5e1e330f27f446613 done
+#16 exporting attestation manifest sha256:3d5fb505bad46e6ff23e671a42bd519423cd2e7537fee7646950d4eb376eff10
+#16 exporting attestation manifest sha256:3d5fb505bad46e6ff23e671a42bd519423cd2e7537fee7646950d4eb376eff10 done
+#16 exporting manifest list sha256:ea123a2830ba1bebb7cd20b398bcee928a7173180d1840ae01b3b3b38388d80e done
+#16 naming to docker.io/library/catraca-eval-ui-app:latest done
+#16 unpacking to docker.io/library/catraca-eval-ui-app:latest 0.0s done
+#16 DONE 0.2s
+
+#17 resolving provenance for metadata file
+#17 DONE 0.0s
+
+> catraca@1.0.0 test
+> node scripts/test.mjs
+
+Syntax: 25 JavaScript modules checked.
+✔ F02 cadastro, me, logout e novo login usam sessão persistida e senha protegida (160.208745ms)
+✔ F02 cadastro não aceita elevação de papel e normaliza email sem duplicar contas (108.689814ms)
+✔ F02/CF01 três contas da seed autenticam com seus papéis; senhas erradas não autenticam (216.012769ms)
+✔ F02 requireUser retorna somente campos públicos e distingue visitante de papel incorreto (109.87523ms)
+✔ F02 login rotaciona sessão; falha de login preserva sessão anterior; logout é idempotente (127.840241ms)
+✔ F02 sessões expiradas, forjadas, malformadas e cookies ambíguos não autenticam (88.59072ms)
+✔ F02 entradas inválidas não criam usuários nem sessões e rotas desconhecidas não são capturadas (89.809386ms)
+✔ F02 cadastro reverte conta quando inserção da sessão falha (87.200913ms)
+✔ F02 mutações de autenticação rejeitam origem externa pelo servidor (65.734346ms)
+✔ F03 create validates required values, future date and integer cents without partial writes (2.656501ms)
+✔ F03 update counts pending and confirmed across channels, preserves historical prices and rolls back rejection (1.062315ms)
+✔ F03 update revalidates all fields and future dates, ignoring attempted identity/status changes (1.268486ms)
+✔ F03 ownership applies to list, direct URL domain lookup, edit and publish (0.902686ms)
+✔ F03 public catalog follows publication and cancellation, preserving sold out events (1.497801ms)
+✔ F03 public HTTP adapter works without auth dependency and ignores unrelated routes (18.257203ms)
+✔ F01 seed idempotente, credenciais e rollback real (89.318466ms)
+✔ F01 saúde HTTP real (77.788366ms)
+✔ F01 rejeita dinheiro fracionário e callback async antes de executá-lo (66.214053ms)
+✔ F05 painel E1 integra HTTP dos dois canais com preços históricos e entrada única (161.995182ms)
+✔ F05 cancelamento E3 é imediato, irreversível e preservado por callback lento dos dois canais (117.788639ms)
+✔ F05 check-in segue todas as mensagens literais e a prioridade R10 (63.427494ms)
+✔ F05/CF06 todas as rotas protegem dados e mutações por papel e propriedade antes do corpo (161.934819ms)
+✔ F05 cancelamento rejeita draft e reverte todas as mudanças se a transação falhar (76.292762ms)
+✔ F05 BEGIN IMMEDIATE concede apenas uma entrada entre conexões SQLite independentes (210.024683ms)
+✔ F04 wall-clock jumps cannot accelerate or stall gateway elapsed time (251.935302ms)
+✔ F04 preço histórico, validação antes do evento, reservas, recusa e callback idempotente (61.987161ms)
+✔ F04 gateway defaults and persisted jobs survive reopen; final states cannot resurrect (92.856712ms)
+✔ F04 HTTP contract, precedence, channels and repeated 30-request races (261.251528ms)
+✔ F04 database lock protects reservations across independent worker connections (240.805272ms)
+✔ static routes support direct navigation and HEAD without exposing other files or API fallbacks (34.109174ms)
+ℹ tests 30
+ℹ suites 0
+ℹ pass 30
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3478.871674

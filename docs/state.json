@@ -1,6 +1,6 @@
 {
   "project": "Catraca",
-  "phase": "final_integrated_evaluation",
+  "phase": "final_artifact_audit",
   "verdict": "REJECTED — CORRECTIONS REQUIRED",
   "features": [
     {"id":"F01","status":"completed","latestReport":"docs/features/F01/reports/2026-11-26T024629Z-98c51eb-reevaluation.md"},
@@ -8,8 +8,8 @@
     {"id":"F03","status":"completed","latestReport":"docs/features/F03/reports/20261126-independent-2691761-sales-ops.md"},
     {"id":"F04","status":"completed","latestReport":"docs/features/F04/reports/20261126-independent-2691761-sales-ops.md"},
     {"id":"F05","status":"completed","latestReport":"docs/features/F05/reports/20261126-independent-2691761-sales-ops.md"},
-    {"id":"F06","status":"implemented_awaiting_evaluation","latestReport":null}
+    {"id":"F06","status":"completed","latestReport":"docs/features/F06/reports/20261126-independent-2691761-ui-final.md"}
   ],
-  "nextAction": "Concluir reavaliações temporais e UI; auditar18passos, estado, relatórios e HTML; publicar main final.",
+  "nextAction": "Auditar passo18 no estado consolidado, finalizar HTML e publicar main validada.",
   "blockers": []
 }

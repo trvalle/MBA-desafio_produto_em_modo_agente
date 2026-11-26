@@ -1,0 +1,10 @@
+
+> catraca@1.0.0 down
+> node scripts/compose.js down
+
+ Container catraca-eval-ui-app-1 Stopping 
+ Container catraca-eval-ui-app-1 Stopped 
+ Container catraca-eval-ui-app-1 Removing 
+ Container catraca-eval-ui-app-1 Removed 
+ Network catraca-eval-ui_default Removing 
+ Network catraca-eval-ui_default Removed 

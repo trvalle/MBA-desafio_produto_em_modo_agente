@@ -1,0 +1,108 @@
+{
+  "sha": "2691761de8bf2b006e5775397e5128c603fa2d6f",
+  "startedAt": "2026-11-26T02:59:46.908Z",
+  "finishedAt": "2026-11-26T03:01:52.268Z",
+  "results": [
+    {
+      "step": 1,
+      "detail": "Clone iniciado externamente por npm run up; saúde HTTP 200.",
+      "at": "2026-11-26T02:59:46.969Z"
+    },
+    {
+      "step": 2,
+      "detail": "E1 rascunho ausente da vitrine e API.",
+      "at": "2026-11-26T02:59:47.245Z"
+    },
+    {
+      "step": 3,
+      "detail": "Data passada rejeitada pela interface.",
+      "at": "2026-11-26T02:59:47.754Z"
+    },
+    {
+      "step": 4,
+      "detail": "E1 publicado aparece com 2 vagas e R$100.",
+      "at": "2026-11-26T02:59:47.930Z"
+    },
+    {
+      "step": 5,
+      "detail": "Cadastro e compra UI: pendente, confirmado até 5s, evento/código visíveis.",
+      "at": "2026-11-26T02:59:51.267Z"
+    },
+    {
+      "step": 6,
+      "detail": "Compra lenta pendente ocupa última vaga.",
+      "at": "2026-11-26T02:59:51.272Z"
+    },
+    {
+      "step": 7,
+      "detail": "Antes de 30s: API 409 e UI Ingressos esgotados.",
+      "at": "2026-11-26T02:59:51.334Z"
+    },
+    {
+      "step": 8,
+      "detail": "Recusa libera vaga e T3 confirma.",
+      "at": "2026-11-26T03:00:39.364Z"
+    },
+    {
+      "step": 9,
+      "detail": "Capacidade protegida e painel 3 confirmados / receita histórica R$350.",
+      "at": "2026-11-26T03:00:42.937Z"
+    },
+    {
+      "step": 10,
+      "detail": "Mensagens check-in exatas e painel com uma entrada.",
+      "at": "2026-11-26T03:00:43.217Z"
+    },
+    {
+      "step": 11,
+      "detail": "Isolamento de A/B/participante/visitante e código de outro evento.",
+      "at": "2026-11-26T03:00:47.241Z"
+    },
+    {
+      "step": 12,
+      "detail": "E3 cancelado com ingresso confirmado e outro pendente lento.",
+      "at": "2026-11-26T03:00:50.646Z"
+    },
+    {
+      "step": 13,
+      "detail": "Cancelamento imediato: retirado da API, compra404, refunded/cancelled e edição bloqueada.",
+      "at": "2026-11-26T03:00:50.702Z"
+    },
+    {
+      "step": 14,
+      "detail": "Callback tardio não ressuscita ingresso; painel cancelado correto após45s.",
+      "at": "2026-11-26T03:01:32.506Z"
+    },
+    {
+      "step": "15-E4",
+      "detail": "Pipeline seq/xargs/curl: 30 simultâneas = 5 respostas202 e25 respostas409; painel5/0.",
+      "at": "2026-11-26T03:01:36.737Z"
+    },
+    {
+      "step": "15-E5",
+      "detail": "Pipeline seq/xargs/curl: 30 simultâneas = 5 respostas202 e25 respostas409; painel5/0.",
+      "at": "2026-11-26T03:03:17.384Z"
+    },
+    {
+      "step": 16,
+      "detail": "Três rotas401, cartão inválido422 e ticket inexistente404.",
+      "at": "2026-11-26T03:03:17.391Z"
+    },
+    {
+      "step": "browser",
+      "detail": "Nenhum erro JavaScript observado.",
+      "at": "2026-11-26T03:03:17.391Z"
+    },
+    {
+      "step": 17,
+      "detail": "Gates PASS; down liberou porta e encerrou containers; up e login das três contas seed funcionam.",
+      "at": "2026-11-26T03:01:52.160Z"
+    },
+    {
+      "step": "responsive",
+      "detail": "Vitrine 390px sem rolagem horizontal.",
+      "at": "2026-11-26T03:01:52.236Z"
+    }
+  ],
+  "errors": []
+}

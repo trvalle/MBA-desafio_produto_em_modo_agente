@@ -1,0 +1,10 @@
+
+> catraca@1.0.0 down
+> node scripts/compose.js down
+
+ Container catraca-final-flow-app-1 Stopping 
+ Container catraca-final-flow-app-1 Stopped 
+ Container catraca-final-flow-app-1 Removing 
+ Container catraca-final-flow-app-1 Removed 
+ Network catraca-final-flow_default Removing 
+ Network catraca-final-flow_default Removed 
