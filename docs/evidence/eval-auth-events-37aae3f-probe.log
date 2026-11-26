@@ -1,0 +1,175 @@
+{"dateUTC":"2026-11-26T02:46:21.171Z","node":"v24.22.3","base":"http://127.0.0.1:42249","handlers":"createApp defaults","sha":"37aae3fc15f3423f88806c6cc824cd0435088259"}
+{"label":"F02-T01/T02 register","method":"POST","path":"/api/auth/register","input":{"name":"Independent evaluator","email":"eval-37aae3f@example.com","password":"[redacted]","role":"organizer"},"status":201,"body":{"user":{"id":"usr_efa6e220-f9e6-4420-8506-6c7465aedbe3","name":"Independent evaluator","email":"eval-37aae3f@example.com","role":"participant"}},"setCookie":"catraca_session=[redacted]; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800"}
+PASS F02-T01/T02 register no password/hash response
+PASS registration remains participant
+PASS persisted role participant
+PASS F02-T03 cookie attributes
+{"label":"F02-T01 initial me","method":"GET","path":"/api/auth/me","status":200,"body":{"user":{"id":"usr_efa6e220-f9e6-4420-8506-6c7465aedbe3","name":"Independent evaluator","email":"eval-37aae3f@example.com","role":"participant"}}}
+PASS F02-T01 initial me no password/hash response
+PASS registration session active
+{"label":"F02-T01 logout","method":"POST","path":"/api/auth/logout","status":200,"body":{"user":null},"setCookie":"catraca_session=; HttpOnly; SameSite=Strict; Path=/; Max-Age=0"}
+PASS F02-T01 logout no password/hash response
+PASS logout response and expiry
+{"label":"F02-T03 replay revoked cookie","method":"GET","path":"/api/auth/me","status":200,"body":{"user":null}}
+PASS F02-T03 replay revoked cookie no password/hash response
+PASS revoked cookie rejected
+{"label":"F02-T01 login new account","method":"POST","path":"/api/auth/login","input":{"name":"Independent evaluator","email":"eval-37aae3f@example.com","password":"[redacted]","role":"organizer"},"status":200,"body":{"user":{"id":"usr_efa6e220-f9e6-4420-8506-6c7465aedbe3","name":"Independent evaluator","email":"eval-37aae3f@example.com","role":"participant"}},"setCookie":"catraca_session=[redacted]; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800"}
+PASS F02-T01 login new account no password/hash response
+PASS new account login
+{"label":"F02-T01 me after login","method":"GET","path":"/api/auth/me","status":200,"body":{"user":{"id":"usr_efa6e220-f9e6-4420-8506-6c7465aedbe3","name":"Independent evaluator","email":"eval-37aae3f@example.com","role":"participant"}}}
+PASS F02-T01 me after login no password/hash response
+PASS login session active
+{"label":"F02-T04/CF01 seed a","method":"POST","path":"/api/auth/login","input":{"email":"organizador.a@catraca.local","password":"[redacted]"},"status":200,"body":{"user":{"id":"org_a","name":"Organizador A","email":"organizador.a@catraca.local","role":"organizer"}},"setCookie":"catraca_session=[redacted]; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800"}
+PASS F02-T04/CF01 seed a no password/hash response
+PASS seed a role
+{"label":"F02-T04 wrong password a","method":"POST","path":"/api/auth/login","input":{"email":"organizador.a@catraca.local","password":"[redacted]"},"status":401,"body":{"error":"invalid_credentials"}}
+PASS F02-T04 wrong password a no password/hash response
+PASS wrong password a no session
+{"label":"F02-T04/CF01 seed b","method":"POST","path":"/api/auth/login","input":{"email":"organizador.b@catraca.local","password":"[redacted]"},"status":200,"body":{"user":{"id":"org_b","name":"Organizador B","email":"organizador.b@catraca.local","role":"organizer"}},"setCookie":"catraca_session=[redacted]; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800"}
+PASS F02-T04/CF01 seed b no password/hash response
+PASS seed b role
+{"label":"F02-T04 wrong password b","method":"POST","path":"/api/auth/login","input":{"email":"organizador.b@catraca.local","password":"[redacted]"},"status":401,"body":{"error":"invalid_credentials"}}
+PASS F02-T04 wrong password b no password/hash response
+PASS wrong password b no session
+{"label":"F02-T04/CF01 seed p","method":"POST","path":"/api/auth/login","input":{"email":"participante@catraca.local","password":"[redacted]"},"status":200,"body":{"user":{"id":"participant","name":"Participante","email":"participante@catraca.local","role":"participant"}},"setCookie":"catraca_session=[redacted]; HttpOnly; SameSite=Strict; Path=/; Max-Age=604800"}
+PASS F02-T04/CF01 seed p no password/hash response
+PASS seed p role
+{"label":"F02-T04 wrong password p","method":"POST","path":"/api/auth/login","input":{"email":"participante@catraca.local","password":"[redacted]"},"status":401,"body":{"error":"invalid_credentials"}}
+PASS F02-T04 wrong password p no password/hash response
+PASS wrong password p no session
+PASS F02-T05 helper visitor
+PASS F02-T05 helper participant
+PASS F02-T05 helper organizer
+{"label":"F03-T01 valid creation","method":"POST","path":"/api/organizer/events","input":{"name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":12345,"status":"published","organizerId":"org_b"},"status":201,"body":{"id":"evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","organizerId":"org_a","name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":12345,"status":"draft","availableSeats":5}}
+PASS F03-T01 valid creation no password/hash response
+PASS created draft with actual owner
+{"label":"F03-T01 invalid 0","method":"POST","path":"/api/organizer/events","input":{},"status":422,"body":{"error":"invalid_request"}}
+PASS F03-T01 invalid 0 no password/hash response
+PASS invalid event 0 rejected
+{"label":"F03-T01 invalid 1","method":"POST","path":"/api/organizer/events","input":{"startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":12345},"status":422,"body":{"error":"invalid_request"}}
+PASS F03-T01 invalid 1 no password/hash response
+PASS invalid event 1 rejected
+{"label":"F03-T01 invalid 2","method":"POST","path":"/api/organizer/events","input":{"name":"Evaluator event A","location":"Isolated test","capacity":5,"priceCents":12345},"status":422,"body":{"error":"invalid_request"}}
+PASS F03-T01 invalid 2 no password/hash response
+PASS invalid event 2 rejected
+{"label":"F03-T01 invalid 3","method":"POST","path":"/api/organizer/events","input":{"name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","capacity":5,"priceCents":12345},"status":422,"body":{"error":"invalid_request"}}
+PASS F03-T01 invalid 3 no password/hash response
+PASS invalid event 3 rejected
+{"label":"F03-T01 invalid 4","method":"POST","path":"/api/organizer/events","input":{"name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","priceCents":12345},"status":422,"body":{"error":"invalid_request"}}
+PASS F03-T01 invalid 4 no password/hash response
+PASS invalid event 4 rejected
+{"label":"F03-T01 invalid 5","method":"POST","path":"/api/organizer/events","input":{"name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5},"status":422,"body":{"error":"invalid_request"}}
+PASS F03-T01 invalid 5 no password/hash response
+PASS invalid event 5 rejected
+{"label":"F03-T01 invalid 6","method":"POST","path":"/api/organizer/events","input":{"name":"Evaluator event A","startsAt":"2000-01-01T00:00:00Z","location":"Isolated test","capacity":5,"priceCents":12345},"status":422,"body":{"error":"invalid_request"}}
+PASS F03-T01 invalid 6 no password/hash response
+PASS invalid event 6 rejected
+{"label":"F03-T01 invalid 7","method":"POST","path":"/api/organizer/events","input":{"name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":0,"priceCents":12345},"status":422,"body":{"error":"invalid_request"}}
+PASS F03-T01 invalid 7 no password/hash response
+PASS invalid event 7 rejected
+{"label":"F03-T01 invalid 8","method":"POST","path":"/api/organizer/events","input":{"name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":1.5,"priceCents":12345},"status":422,"body":{"error":"invalid_request"}}
+PASS F03-T01 invalid 8 no password/hash response
+PASS invalid event 8 rejected
+{"label":"F03-T01 invalid 9","method":"POST","path":"/api/organizer/events","input":{"name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":0},"status":422,"body":{"error":"invalid_request"}}
+PASS F03-T01 invalid 9 no password/hash response
+PASS invalid event 9 rejected
+{"label":"F03-T01 invalid 10","method":"POST","path":"/api/organizer/events","input":{"name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":1.5},"status":422,"body":{"error":"invalid_request"}}
+PASS F03-T01 invalid 10 no password/hash response
+PASS invalid event 10 rejected
+PASS invalid creates do not persist
+{"label":"F03-T04 owner B create","method":"POST","path":"/api/organizer/events","input":{"name":"Evaluator private B","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":12345},"status":201,"body":{"id":"evt_d99b64dc-91f8-4439-ad19-994d56075967","organizerId":"org_b","name":"Evaluator private B","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":12345,"status":"draft","availableSeats":5}}
+PASS F03-T04 owner B create no password/hash response
+PASS owner B event created
+{"label":"F03-T03 drafts hidden","method":"GET","path":"/api/events","status":200,"body":[]}
+PASS F03-T03 drafts hidden no password/hash response
+PASS drafts absent public catalog
+{"label":"F03-CF02 publish","method":"POST","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a/publish","status":200,"body":{"id":"evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","organizerId":"org_a","name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":12345,"status":"published","availableSeats":5}}
+PASS F03-CF02 publish no password/hash response
+PASS publication persists
+FIXTURE tickets: one each pending, confirmed, declined, refunded, cancelled; occupation must be 2
+{"label":"F03-T03 published catalog with occupancy","method":"GET","path":"/api/events","status":200,"body":[{"id":"evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","organizerId":"org_a","name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":12345,"status":"published","availableSeats":3}]}
+PASS F03-T03 published catalog with occupancy no password/hash response
+PASS catalog price and pending+confirmed availability
+{"label":"F03-T02/CF02 reduction rollback","method":"PUT","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","input":{"name":"MUST NOT PERSIST","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":1,"priceCents":999},"status":409,"body":{"error":"capacity_below_occupied"}}
+PASS F03-T02/CF02 reduction rollback no password/hash response
+PASS capacity below occupancy rejected
+PASS full event unchanged and transaction closed
+{"label":"F03-T02 past edit","method":"PUT","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","input":{"name":"Evaluator event A","startsAt":"2000-01-01T00:00:00Z","location":"Isolated test","capacity":5,"priceCents":12345},"status":422,"body":{"error":"invalid_request"}}
+PASS F03-T02 past edit no password/hash response
+PASS past edit rejected
+PASS past edit unchanged
+{"label":"F03-T02 capacity increase","method":"PUT","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","input":{"name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":8,"priceCents":15000},"status":200,"body":{"id":"evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","organizerId":"org_a","name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":8,"priceCents":15000,"status":"published","availableSeats":6}}
+PASS F03-T02 capacity increase no password/hash response
+PASS capacity increase accepted
+PASS historical fixture prices unchanged
+{"label":"F03-T04 HTTP own list a","method":"GET","path":"/api/organizer/events","status":200,"body":[{"id":"evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","organizerId":"org_a","name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":8,"priceCents":15000,"status":"published","availableSeats":6}]}
+PASS F03-T04 HTTP own list a no password/hash response
+PASS HTTP list isolated a
+PASS domain list isolated a
+{"label":"F03-T04 HTTP own list b","method":"GET","path":"/api/organizer/events","status":200,"body":[{"id":"evt_d99b64dc-91f8-4439-ad19-994d56075967","organizerId":"org_b","name":"Evaluator private B","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":12345,"status":"draft","availableSeats":5}]}
+PASS F03-T04 HTTP own list b no password/hash response
+PASS HTTP list isolated b
+PASS domain list isolated b
+{"label":"F03-T04/T06/CF11 visitor GET","method":"GET","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","status":401,"body":{"error":"unauthorized"}}
+PASS F03-T04/T06/CF11 visitor GET no password/hash response
+PASS protected detail visitor GET
+{"label":"F03-T04/T06/CF11 visitor PUT","method":"PUT","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","input":{"name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":12345},"status":401,"body":{"error":"unauthorized"}}
+PASS F03-T04/T06/CF11 visitor PUT no password/hash response
+PASS protected detail visitor PUT
+{"label":"F03-T04/T06/CF11 visitor POST","method":"POST","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a/publish","status":401,"body":{"error":"unauthorized"}}
+PASS F03-T04/T06/CF11 visitor POST no password/hash response
+PASS protected detail visitor POST
+{"label":"F02-T05/F03-CF11 collection visitor GET","method":"GET","path":"/api/organizer/events","status":401,"body":{"error":"unauthorized"}}
+PASS F02-T05/F03-CF11 collection visitor GET no password/hash response
+PASS protected collection visitor GET
+{"label":"F02-T05/F03-CF11 collection visitor POST","method":"POST","path":"/api/organizer/events","input":{"name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":12345},"status":401,"body":{"error":"unauthorized"}}
+PASS F02-T05/F03-CF11 collection visitor POST no password/hash response
+PASS protected collection visitor POST
+{"label":"F03-T04/T06/CF11 p GET","method":"GET","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","status":403,"body":{"error":"forbidden"}}
+PASS F03-T04/T06/CF11 p GET no password/hash response
+PASS protected detail p GET
+{"label":"F03-T04/T06/CF11 p PUT","method":"PUT","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","input":{"name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":12345},"status":403,"body":{"error":"forbidden"}}
+PASS F03-T04/T06/CF11 p PUT no password/hash response
+PASS protected detail p PUT
+{"label":"F03-T04/T06/CF11 p POST","method":"POST","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a/publish","status":403,"body":{"error":"forbidden"}}
+PASS F03-T04/T06/CF11 p POST no password/hash response
+PASS protected detail p POST
+{"label":"F02-T05/F03-CF11 collection p GET","method":"GET","path":"/api/organizer/events","status":403,"body":{"error":"forbidden"}}
+PASS F02-T05/F03-CF11 collection p GET no password/hash response
+PASS protected collection p GET
+{"label":"F02-T05/F03-CF11 collection p POST","method":"POST","path":"/api/organizer/events","input":{"name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":12345},"status":403,"body":{"error":"forbidden"}}
+PASS F02-T05/F03-CF11 collection p POST no password/hash response
+PASS protected collection p POST
+{"label":"F03-T04/T06/CF11 b GET","method":"GET","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","status":404,"body":{"error":"event_not_found"}}
+PASS F03-T04/T06/CF11 b GET no password/hash response
+PASS protected detail b GET
+{"label":"F03-T04/T06/CF11 b PUT","method":"PUT","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","input":{"name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":12345},"status":404,"body":{"error":"event_not_found"}}
+PASS F03-T04/T06/CF11 b PUT no password/hash response
+PASS protected detail b PUT
+{"label":"F03-T04/T06/CF11 b POST","method":"POST","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a/publish","status":404,"body":{"error":"event_not_found"}}
+PASS F03-T04/T06/CF11 b POST no password/hash response
+PASS protected detail b POST
+{"label":"F03-T06 owner direct ID","method":"GET","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","status":200,"body":{"id":"evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","organizerId":"org_a","name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":8,"priceCents":15000,"status":"published","availableSeats":6}}
+PASS F03-T06 owner direct ID no password/hash response
+PASS owner direct GET succeeds
+PASS F03-T04 domain ownedEvent denies org_b
+PASS F03-T04 domain updateEvent denies org_b
+PASS F03-T04 domain publishEvent denies org_b
+PASS F03-T04 domain ownedEvent denies participant
+PASS F03-T04 domain updateEvent denies participant
+PASS F03-T04 domain publishEvent denies participant
+{"label":"F03-T03 cancellation dependency","method":"POST","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a/cancel","status":404,"body":{"error":"not_found"}}
+PASS F03-T03 cancellation dependency no password/hash response
+PASS F05 absent at evaluated SHA: T03 integrated cancellation BLOCKED
+FIXTURE state cancelled, expressly allowed by F03-T05; does not prove integrated cancel
+{"label":"F03 cancellation fixture catalog","method":"GET","path":"/api/events","status":200,"body":[]}
+PASS F03 cancellation fixture catalog no password/hash response
+PASS cancelled fixture absent catalog
+{"label":"F03-T05 cancelled PUT","method":"PUT","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a","input":{"name":"Evaluator event A","startsAt":"2026-12-03T02:46:21.390Z","location":"Isolated test","capacity":5,"priceCents":12345},"status":409,"body":{"error":"event_cancelled"}}
+PASS F03-T05 cancelled PUT no password/hash response
+PASS cancelled PUT rejected
+{"label":"F03-T05 cancelled POST","method":"POST","path":"/api/organizer/events/evt_5058dc1e-4557-4b4b-bec5-6c1dfc6c1e3a/publish","status":409,"body":{"error":"event_cancelled"}}
+PASS F03-T05 cancelled POST no password/hash response
+PASS cancelled POST rejected
+PASS cancelled availability zero
+{"result":"all executed assertions passed","assertions":120,"F02":"PASS","F03":"BLOCKED F03-T03 until integrated F05 cancellation","finishedUTC":"2026-11-26T02:46:21.415Z"}

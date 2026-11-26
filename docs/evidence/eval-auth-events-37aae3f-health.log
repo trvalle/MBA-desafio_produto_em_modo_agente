@@ -1,0 +1,12 @@
+HTTP/1.1 200 OK
+X-Content-Type-Options: nosniff
+X-Frame-Options: DENY
+Referrer-Policy: same-origin
+Content-Type: application/json; charset=utf-8
+Cache-Control: no-store
+Date: Thu, 26 Nov 2026 02:46:50 GMT
+Connection: keep-alive
+Keep-Alive: timeout=5
+Transfer-Encoding: chunked
+
+{"status":"ok"}

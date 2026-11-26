@@ -1,0 +1,74 @@
+
+> catraca@1.0.0 up
+> node scripts/compose.js up
+
+ Image catraca-eval-auth-events-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 536B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 390B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:24.22.3-bookworm-slim
+#3 DONE 0.7s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 87B done
+#4 DONE 0.0s
+
+#5 [ 1/10] FROM docker.io/library/node:24.22.3-bookworm-slim@sha256:873f586f3794f52281bd039bf02c048a0be08fde619338f9941bad1eb6b34530
+#5 resolve docker.io/library/node:24.22.3-bookworm-slim@sha256:873f586f3794f52281bd039bf02c048a0be08fde619338f9941bad1eb6b34530 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 2.12kB done
+#6 DONE 0.0s
+
+#7 [ 5/10] COPY public ./public
+#7 CACHED
+
+#8 [ 9/10] COPY AGENTS.md ./
+#8 CACHED
+
+#9 [ 2/10] WORKDIR /app
+#9 CACHED
+
+#10 [ 3/10] COPY package*.json ./
+#10 CACHED
+
+#11 [ 6/10] COPY tests ./tests
+#11 CACHED
+
+#12 [ 8/10] COPY docs ./docs
+#12 CACHED
+
+#13 [ 4/10] COPY src ./src
+#13 CACHED
+
+#14 [ 7/10] COPY scripts ./scripts
+#14 CACHED
+
+#15 [10/10] RUN mkdir -p /app/data && chown node:node /app/data
+#15 CACHED
+
+#16 exporting to image
+#16 exporting layers done
+#16 exporting manifest sha256:52ca886d3c26cc67c725e0bb5fbc0e4e1531d0eff78e795d3879052fa6063bd2 done
+#16 exporting config sha256:38dc88703fd57302721d3cf81a9677ae17b4e2fb2a5ad59b26d731e42b97d672 done
+#16 exporting attestation manifest sha256:74a6f888e715ef5fa569da009dfeeffa045ee9e1d66ddba45de11f46d8d5a19d done
+#16 exporting manifest list sha256:75077de383c0b8f87a020406848e2b5e0bee0b33233963ff6ac2ea43420207fe done
+#16 naming to docker.io/library/catraca-eval-auth-events-app:latest done
+#16 unpacking to docker.io/library/catraca-eval-auth-events-app:latest done
+#16 DONE 0.1s
+
+#17 resolving provenance for metadata file
+#17 DONE 0.0s
+ Image catraca-eval-auth-events-app Built 
+ Container catraca-eval-auth-events-app-1 Creating 
+ Container catraca-eval-auth-events-app-1 Created 
+ Container catraca-eval-auth-events-app-1 Starting 
+ Container catraca-eval-auth-events-app-1 Started 
+ Container catraca-eval-auth-events-app-1 Waiting 
+ Container catraca-eval-auth-events-app-1 Healthy 
