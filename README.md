@@ -55,6 +55,9 @@ Gateway simulado persiste prazo e decisão no próprio ingresso. Um worker a cad
 após reiniciar, os jobs continuam no banco. A requisição retorna 202 antes do pagamento. Nenhum número completo
 de cartão é persistido. O callback só altera pending de evento published. Cancelamento atualiza evento e ingressos
 na mesma transação, impedindo que uma resposta tardia confirme ingresso cancelado/estornado.
+Durante cada processo, o gateway usa tempo decorrido monotônico ancorado em um timestamp persistível;
+correções do relógio de parede (observadas no WSL durante avaliação) não antecipam nem atrasam o pagamento.
+Ao reiniciar, os prazos persistidos são retomados contra o novo relógio de referência.
 
 | Final do cartão de 16 dígitos | Resultado | Atraso padrão |
 |---|---|---|

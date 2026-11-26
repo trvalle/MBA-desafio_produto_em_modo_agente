@@ -13,6 +13,19 @@ import { createApp } from '../src/server.js';
 const input = {name:'Evento teste',startsAt:'2099-05-05T18:00:00Z',location:'Local',capacity:5,priceCents:10000};
 const buyer = suffix=>({buyerEmail:'comprador@example.com',cardNumber:`400000000000${suffix}`});
 const event = (db, capacity=5) => { const e = createEvent(db,'org_a',{...input,capacity}); return publishEvent(db,'org_a',e.id); };
+test('F04 wall-clock jumps cannot accelerate or stall gateway elapsed time',async()=>{
+  const db=openDb(':memory:');seed(db);const e=event(db);
+  const ticket=purchase(db,e.id,buyer('0001'),null,{fastDelayMs:150});
+  const original=Date.now; const baseline=Date.now();
+  try {
+    Date.now=()=>baseline+3600000;
+    processPayments(db);
+    assert.equal(db.prepare('SELECT status FROM tickets WHERE id=?').get(ticket.ticketId).status,'pending');
+    Date.now=()=>baseline-3600000;
+    await new Promise(r=>setTimeout(r,180));processPayments(db);
+    assert.equal(db.prepare('SELECT status FROM tickets WHERE id=?').get(ticket.ticketId).status,'confirmed');
+  }finally{Date.now=original;db.close();}
+});
 test('F04 preço histórico, validação antes do evento, reservas, recusa e callback idempotente',()=>{
   const db=openDb(':memory:');seed(db);const e=event(db,2);
   assert.throws(()=>purchase(db,'missing',{buyerEmail:'x',cardNumber:'123'}),e=>e.status===422);

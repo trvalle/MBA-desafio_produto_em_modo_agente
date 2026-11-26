@@ -37,6 +37,8 @@ F04 exporta `purchase(db,eventId,{buyerEmail,cardNumber},userId=null,options={})
 `partnerHandler(ctx)` para contrato literal do brief. Atrasos padrão 3000/35000ms (dentro das faixas);
 options.fastDelayMs/slowDelayMs somente testes diretos, nunca configurados no Compose padrão.
 Worker executa a cada 100ms. Não armazena cartão, só approved e dueAt.
+O relógio de pagamentos usa epoch inicial + tempo monotônico decorrido (`src/clock.js`), protegendo
+os atrasos durante o processo contra ajustes do relógio de parede. Prazos persistidos permitem retomada.
 
 F05 exporta `operationsHandler(ctx)` e funções `dashboard(db,eventId)`, `cancelEvent(db,organizerId,eventId)`,
 `checkIn(db,organizerId,eventId,code)`. GET /api/organizer/events/:id/dashboard =>

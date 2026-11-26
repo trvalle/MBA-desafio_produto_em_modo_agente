@@ -3,6 +3,7 @@ import { available, transaction } from './db.js';
 import { id, validEmail } from './security.js';
 import { body, HttpError, json } from './http.js';
 import { requireUser } from './auth.js';
+import { paymentNow } from './clock.js';
 
 export function purchase(db, eventId, input, userId = null, options = {}) {
   if (!input || !validEmail(input.buyerEmail) || typeof input.cardNumber !== 'string'
@@ -14,7 +15,7 @@ export function purchase(db, eventId, input, userId = null, options = {}) {
     const suffix = input.cardNumber.slice(-4);
     const delay = ['0003','0004'].includes(suffix) ? (options.slowDelayMs ?? 35000) : (options.fastDelayMs ?? 3000);
     const ticketId = id('tkt'); const code = randomBytes(8).toString('hex').toUpperCase();
-    const now = Date.now();
+    const now = paymentNow();
     db.prepare(`INSERT INTO tickets(id,code,eventId,userId,buyerEmail,priceCents,status,checkedIn,createdAt,dueAt,approved)
       VALUES(?,?,?,?,?,?,'pending',0,?,?,?)`).run(ticketId,code,eventId,userId,input.buyerEmail,event.priceCents,
       now,now + delay,['0001','0003'].includes(suffix) ? 1 : 0);
@@ -22,7 +23,7 @@ export function purchase(db, eventId, input, userId = null, options = {}) {
   });
 }
 
-export function processPayments(db, now = Date.now()) {
+export function processPayments(db, now = paymentNow()) {
   return transaction(db, () => db.prepare(`UPDATE tickets SET status=CASE WHEN approved=1 THEN 'confirmed' ELSE 'declined' END
     WHERE status='pending' AND dueAt<=? AND EXISTS
       (SELECT 1 FROM events WHERE events.id=tickets.eventId AND events.status='published')`).run(now).changes);
