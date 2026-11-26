@@ -1,0 +1,4 @@
+
+> catraca@1.0.0 down
+> node scripts/compose.js down
+

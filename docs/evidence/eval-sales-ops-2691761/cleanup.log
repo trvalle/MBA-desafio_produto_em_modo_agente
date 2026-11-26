@@ -1,0 +1,11 @@
+
+> catraca@1.0.0 down
+> node scripts/compose.js down
+
+ Container catraca-eval-sales-app-1 Stopping 
+ Container catraca-eval-sales-app-1 Stopped 
+ Container catraca-eval-sales-app-1 Removing 
+ Container catraca-eval-sales-app-1 Removed 
+ Network catraca-eval-sales_default Removing 
+ Network catraca-eval-sales_default Removed 
+PASS port3145 does not respond; Compose container listing above is empty

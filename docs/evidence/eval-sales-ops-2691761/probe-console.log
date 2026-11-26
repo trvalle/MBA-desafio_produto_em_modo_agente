@@ -1,0 +1,156 @@
+[
+  {
+    "name": "F03-T01 creation validation",
+    "status": "PASS",
+    "detail": {
+      "invalidCases": 14
+    }
+  },
+  {
+    "name": "F03-T03 draft catalog and F04-CF04 draft cannot sell",
+    "status": "PASS"
+  },
+  {
+    "name": "F03-T04 T06 CF11 domain and HTTP ownership",
+    "status": "PASS"
+  },
+  {
+    "name": "F04-T01 immediate reservation both channels and immutable price",
+    "status": "PASS",
+    "detail": {
+      "immediateMs": "see per request",
+      "occupied": 5
+    }
+  },
+  {
+    "name": "F04-T05 key first exact errors and malformed bodies",
+    "status": "PASS"
+  },
+  {
+    "name": "F04-T06 exact partner schemas and types",
+    "status": "PASS"
+  },
+  {
+    "name": "F04-T07 CF03 ownership and same email distinct channels",
+    "status": "PASS"
+  },
+  {
+    "name": "F03-T02 CF02 live occupied capacity atomicity",
+    "status": "PASS"
+  },
+  {
+    "name": "F05 E1 setup historical 100 100 150",
+    "status": "PASS"
+  },
+  {
+    "name": "F04-T03 three independent bursts 30 concurrent requests",
+    "status": "PASS",
+    "detail": [
+      {
+        "eventId": "evt_25011e85-e94c-4849-815f-20a720b73695",
+        "counts": {
+          "202": 5,
+          "409": 25
+        }
+      },
+      {
+        "eventId": "evt_219a0d37-fb8d-4bf0-b4bf-70029871aeb6",
+        "counts": {
+          "202": 5,
+          "409": 25
+        }
+      },
+      {
+        "eventId": "evt_dc6f2587-d759-49a9-965e-7b7c4a9125e2",
+        "counts": {
+          "202": 5,
+          "409": 25
+        }
+      }
+    ]
+  },
+  {
+    "name": "F05 E3 setup real fast and slow plus R10 pending",
+    "status": "PASS"
+  },
+  {
+    "name": "F05-T05 E1 dashboard and T04 simultaneous single admission",
+    "status": "PASS"
+  },
+  {
+    "name": "F05-T07 CF06 all operation actor matrix",
+    "status": "PASS"
+  },
+  {
+    "name": "F05-T01 T02 T06 integrated cancellation",
+    "status": "PASS"
+  },
+  {
+    "name": "F03-T03 T05 and F05-T01 cancelled blocked everywhere",
+    "status": "PASS"
+  },
+  {
+    "name": "F05-T03 literal R10 full precedence",
+    "status": "PASS"
+  },
+  {
+    "name": "F04-T02 T04 default real gateway timings all five suffixes",
+    "status": "PASS",
+    "detail": [
+      {
+        "suffix": "0001",
+        "status": "confirmed",
+        "elapsed": 3093.799082
+      },
+      {
+        "suffix": "0002",
+        "status": "declined",
+        "elapsed": 3095.296731
+      },
+      {
+        "suffix": "9876",
+        "status": "declined",
+        "elapsed": 3098.656855
+      },
+      {
+        "suffix": "0003",
+        "status": "confirmed",
+        "elapsed": 35151.475886
+      },
+      {
+        "suffix": "0004",
+        "status": "declined",
+        "elapsed": 35150.793724
+      }
+    ]
+  },
+  {
+    "name": "F04-T04 F05-T02 T06 CF05 state preserved 45s after cancellation",
+    "status": "PASS",
+    "detail": {
+      "elapsedAfterCancel": 45102.943692,
+      "fast": {
+        "ticketId": "tkt_89c8e838-6c3a-408d-9f3a-2bc999c3bf6a",
+        "code": "8C82382F85660CDB",
+        "eventId": "evt_48294801-d229-4d8a-95f5-9bc2ecdefd37",
+        "status": "refunded",
+        "checkedIn": true
+      },
+      "slow": {
+        "ticketId": "tkt_ca26dfce-5850-4c82-a8f7-778aa40edcb7",
+        "code": "41FB22CF8F924144",
+        "eventId": "evt_48294801-d229-4d8a-95f5-9bc2ecdefd37",
+        "status": "cancelled",
+        "checkedIn": false
+      }
+    }
+  },
+  {
+    "name": "Source transaction and auth dependency inspection",
+    "status": "PASS",
+    "detail": {
+      "transactionProtocol": "BEGIN IMMEDIATE synchronous",
+      "domain": "events auth lazy-loaded only in HTTP handler"
+    }
+  }
+]

@@ -1,0 +1,83 @@
+
+> catraca@1.0.0 up
+> node scripts/compose.js up
+
+ Image catraca-final-flow-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 510B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 390B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:24.22.3-bookworm-slim
+#3 DONE 0.7s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 87B done
+#4 DONE 0.0s
+
+#5 [ 1/10] FROM docker.io/library/node:24.22.3-bookworm-slim@sha256:873f586f3794f52281bd039bf02c048a0be08fde619338f9941bad1eb6b34530
+#5 resolve docker.io/library/node:24.22.3-bookworm-slim@sha256:873f586f3794f52281bd039bf02c048a0be08fde619338f9941bad1eb6b34530 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 379.33kB done
+#6 DONE 0.0s
+
+#7 [ 2/10] WORKDIR /app
+#7 CACHED
+
+#8 [ 3/10] COPY package*.json ./
+#8 DONE 0.0s
+
+#9 [ 4/10] COPY src ./src
+#9 DONE 0.0s
+
+#10 [ 5/10] COPY public ./public
+#10 DONE 0.0s
+
+#11 [ 6/10] COPY tests ./tests
+#11 DONE 0.0s
+
+#12 [ 7/10] COPY scripts ./scripts
+#12 DONE 0.0s
+
+#13 [ 8/10] COPY docs ./docs
+#13 DONE 0.0s
+
+#14 [ 9/10] COPY AGENTS.md ./
+#14 DONE 0.0s
+
+#15 [10/10] RUN mkdir -p /app/data && chown node:node /app/data
+#15 DONE 0.1s
+
+#16 exporting to image
+#16 exporting layers
+#16 exporting layers 0.2s done
+#16 exporting manifest sha256:c7c38d3edb6f51868ba256a75df28132b1c19985f8cb93c7d146cb50596ade7c done
+#16 exporting config sha256:13bf9aed62d35e18c39bf1ad2227c34a1b5457fe319c29c88de88645ec458b9d done
+#16 exporting attestation manifest sha256:3264a31631067dd810ca1441e89a6cf5a35315e004adc86b1bd00dcfe1a6b89f done
+#16 exporting manifest list sha256:6d0e2cd8ffe64c993085d3b807d31f4e7a8882557de78c64f16d4e7c5854c265 done
+#16 naming to docker.io/library/catraca-final-flow-app:latest done
+#16 unpacking to docker.io/library/catraca-final-flow-app:latest 0.1s done
+#16 DONE 0.4s
+
+#17 resolving provenance for metadata file
+#17 DONE 0.0s
+ Image catraca-final-flow-app Built 
+ Network catraca-final-flow_default Creating 
+ Network catraca-final-flow_default Creating 
+ Volume catraca-final-flow_catraca-data Creating 
+ Volume catraca-final-flow_catraca-data Creating 
+ Volume catraca-final-flow_catraca-data Created 
+ Volume catraca-final-flow_catraca-data Created 
+ Network catraca-final-flow_default Created 
+ Network catraca-final-flow_default Created 
+ Container catraca-final-flow-app-1 Creating 
+ Container catraca-final-flow-app-1 Created 
+ Container catraca-final-flow-app-1 Starting 
+ Container catraca-final-flow-app-1 Started 
+ Container catraca-final-flow-app-1 Waiting 
+ Container catraca-final-flow-app-1 Healthy 
