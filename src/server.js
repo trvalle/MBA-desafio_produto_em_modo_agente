@@ -7,7 +7,8 @@ import { authHandler } from './auth.js';
 import { eventsHandler } from './events.js';
 import { purchasesHandler, processPayments } from './purchases.js';
 import { partnerHandler } from './partner.js';
-export function createApp({ db = openDb(), handlers = [partnerHandler, authHandler, eventsHandler, purchasesHandler] } = {}) {
+import { operationsHandler } from './operations.js';
+export function createApp({ db = openDb(), handlers = [partnerHandler, authHandler, eventsHandler, purchasesHandler, operationsHandler] } = {}) {
   seed(db);
   const server = createServer(async (req, res) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');
