@@ -1,7 +1,7 @@
 import { createServer } from 'node:http';
 import { openDb } from './db.js';
 import { seed } from './seed.js';
-import { json } from './http.js';
+import { json, HttpError } from './http.js';
 import { pathToFileURL } from 'node:url';
 export function createApp({ db = openDb(), handlers = [] } = {}) {
   seed(db);
@@ -11,6 +11,9 @@ export function createApp({ db = openDb(), handlers = [] } = {}) {
     res.setHeader('Referrer-Policy', 'same-origin');
     try {
       const url = new URL(req.url, 'http://localhost');
+      if (!['GET','HEAD','OPTIONS'].includes(req.method) && req.headers.origin) {
+        if (new URL(req.headers.origin).host !== req.headers.host) throw new HttpError(403, 'forbidden_origin');
+      }
       if (url.pathname === '/api/health') return json(res, 200, { status: 'ok' });
       const ctx = { req, res, url, db };
       for (const handler of handlers) if (await handler(ctx)) return;
