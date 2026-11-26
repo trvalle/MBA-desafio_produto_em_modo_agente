@@ -9,6 +9,7 @@ import { seed } from '../src/seed.js';
 import { createEvent, publishEvent, updateEvent } from '../src/events.js';
 import { purchase, processPayments } from '../src/purchases.js';
 import { createApp } from '../src/server.js';
+import { paymentNow } from '../src/clock.js';
 
 const input = {name:'Evento teste',startsAt:'2099-05-05T18:00:00Z',location:'Local',capacity:5,priceCents:10000};
 const buyer = suffix=>({buyerEmail:'comprador@example.com',cardNumber:`400000000000${suffix}`});
@@ -47,11 +48,11 @@ test('F04 gateway defaults and persisted jobs survive reopen; final states canno
   const tickets=['0001','0002','0003','0004','9999'].map(s=>purchase(db,e.id,buyer(s)));
   const rows=db.prepare('SELECT * FROM tickets ORDER BY createdAt,id').all();
   for(const row of rows) assert.ok([3000,35000].includes(row.dueAt-row.createdAt));
-  db.close();db=openDb(path);processPayments(db,Date.now()+40000);
+  db.close();db=openDb(path);processPayments(db,paymentNow()+40000);
   assert.deepEqual(tickets.map(t=>db.prepare('SELECT status FROM tickets WHERE id=?').get(t.ticketId).status),['confirmed','declined','confirmed','declined','declined']);
   db.prepare("UPDATE tickets SET status='refunded' WHERE id=?").run(tickets[0].ticketId);
   db.prepare("UPDATE tickets SET status='cancelled' WHERE id=?").run(tickets[2].ticketId);
-  processPayments(db,Date.now()+80000);
+  processPayments(db,paymentNow()+80000);
   assert.equal(db.prepare('SELECT status FROM tickets WHERE id=?').get(tickets[2].ticketId).status,'cancelled');
   assert.equal(db.prepare('SELECT status FROM tickets WHERE id=?').get(tickets[0].ticketId).status,'refunded');
   db.close();rmSync(dir,{recursive:true,force:true});

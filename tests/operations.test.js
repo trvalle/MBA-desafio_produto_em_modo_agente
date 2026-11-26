@@ -12,6 +12,7 @@ import { createEvent, publishEvent, updateEvent, ownedEvent, eventsHandler } fro
 import { purchase, processPayments, purchasesHandler } from '../src/purchases.js';
 import { partnerHandler } from '../src/partner.js';
 import { cancelEvent, checkIn, dashboard, operationsHandler } from '../src/operations.js';
+import { paymentNow } from '../src/clock.js';
 
 const input = { name: 'Operações', startsAt: '2099-05-05T18:00:00Z', location: 'Local', capacity: 3, priceCents: 10000 };
 const buyer = suffix => ({ buyerEmail: 'participante@catraca.local', cardNumber: `400000000000${suffix}` });
@@ -61,7 +62,7 @@ test('F05 painel E1 integra HTTP dos dois canais com preços históricos e entra
   assert.equal(first.status, 202); assert.equal(second.status, 202);
   updateEvent(db, 'org_a', e.id, { ...input, priceCents: 15000 });
   assert.equal((await buySite()).status, 202);
-  processPayments(db, Date.now() + 5000);
+  processPayments(db, paymentNow() + 5000);
   const expected = { confirmed: 3, pending: 0, checkedIn: 0, availableSeats: 0, revenueCents: 35000, refunded: 0 };
   const before = await request(`${base}/dashboard`, { cookie: organizer });
   assert.equal(before.status, 200); assert.deepEqual(before.data, expected);
@@ -90,7 +91,7 @@ test('F05 cancelamento E3 é imediato, irreversível e preservado por callback l
   });
   const slow = await request(`/api/partner/events/${e.id}/purchases`, { method: 'POST', partner: true, data: buyer('0003') });
   assert.equal(fast.status, 202); assert.equal(slow.status, 202);
-  processPayments(db, Date.now() + 5000);
+  processPayments(db, paymentNow() + 5000);
   assert.deepEqual(dashboard(db, e.id), { confirmed: 1, pending: 1, checkedIn: 0, availableSeats: 1, revenueCents: 10000, refunded: 0 });
   assert.equal(checkIn(db, 'org_a', e.id, fast.data.code).message, 'Entrada liberada');
   const start = performance.now();
@@ -104,7 +105,7 @@ test('F05 cancelamento E3 é imediato, irreversível e preservado por callback l
     assert.deepEqual(dashboard(db, e.id), { confirmed: 0, pending: 0, checkedIn: 0, availableSeats: 0, revenueCents: 0, refunded: 1 });
   };
   await verify();
-  assert.equal(processPayments(db, Date.now() + 45000), 0);
+  assert.equal(processPayments(db, paymentNow() + 45000), 0);
   await verify();
   for (const path of ['/api/events', '/api/partner/events']) {
     assert.ok(!(await request(path, { partner: true })).data.some(item => item.id === e.id));
@@ -124,7 +125,7 @@ test('F05 check-in segue todas as mensagens literais e a prioridade R10', t => {
   const declined = purchase(db, e.id, buyer('0002'));
   const pending = purchase(db, e.id, buyer('0003'));
   const foreign = purchase(db, other.id, buyer('0001'));
-  processPayments(db, Date.now() + 5000);
+  processPayments(db, paymentNow() + 5000);
   for (const code of ['absent', foreign.code, undefined, null, {}, 1]) {
     assert.deepEqual(checkIn(db, 'org_a', e.id, code), { message: 'Ingresso inválido para este evento' });
   }

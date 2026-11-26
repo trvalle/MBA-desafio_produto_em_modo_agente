@@ -30,8 +30,8 @@ const buy=async(id,suffix='0001')=>{
 };
 const ticket=async id=>(await api(`/api/partner/tickets/${id}`)).body;
 const confirmed=async id=>{
-  const until=Date.now()+5000;let value;
-  do {value=await ticket(id);if(value.status==='confirmed')return value;await sleep(100);}while(Date.now()<until);
+  const until=performance.now()+5000;let value;
+  do {value=await ticket(id);if(value.status==='confirmed')return value;await sleep(100);}while(performance.now()<until);
   assert.equal(value.status,'confirmed');return value;
 };
 const login=async(email,password='Catraca123!')=>{
@@ -96,11 +96,11 @@ try {
   await page.waitForURL('**/tickets');await page.locator(`[data-ticket-id="${ui.ticketId}"]`).getByText('pendente',{exact:true}).waitFor();await shot('01-ingresso-pendente');
   await confirmed(ui.ticketId);await page.reload();await page.locator(`[data-ticket-id="${ui.ticketId}"]`).getByText('confirmado',{exact:true}).waitFor();
   assert.ok((await page.locator(`[data-ticket-id="${ui.ticketId}"]`).innerText()).includes(ui.code));record(5,'Cadastro e compra UI: pendente, confirmado até 5s, evento/código visíveis.');
-  const t2Start=Date.now();const t2=await buy(e1.id,'0004');assert.equal((await api('/api/partner/events')).body.find(e=>e.id===e1.id).availableSeats,0);record(6,'Compra lenta pendente ocupa última vaga.');
+  const t2Start=performance.now();const t2=await buy(e1.id,'0004');assert.equal((await api('/api/partner/events')).body.find(e=>e.id===e1.id).availableSeats,0);record(6,'Compra lenta pendente ocupa última vaga.');
   assert.equal((await api(`/api/partner/events/${e1.id}/purchases`,'POST',{buyerEmail:'x@example.com',cardNumber:card('0001')})).status,409);
   await page.goto(base+'/');await page.getByRole('article',{name:e1.name,exact:true}).getByText('Ingressos esgotados',{exact:true}).waitFor();await shot('02-esgotado');
-  assert.ok(Date.now()-t2Start<30000);record(7,'Antes de 30s: API 409 e UI Ingressos esgotados.');
-  await sleep(Math.max(0,45000-(Date.now()-t2Start)));assert.equal((await ticket(t2.ticketId)).status,'declined');
+  assert.ok(performance.now()-t2Start<30000);record(7,'Antes de 30s: API 409 e UI Ingressos esgotados.');
+  await sleep(Math.max(0,45000-(performance.now()-t2Start)));assert.equal((await ticket(t2.ticketId)).status,'declined');
   assert.equal((await api('/api/partner/events')).body.find(e=>e.id===e1.id).availableSeats,1);const t3=await buy(e1.id);await confirmed(t3.ticketId);record(8,'Recusa libera vaga e T3 confirma.');
   await logout();await login('organizador.a@catraca.local');await page.goto(base+`/organizer/events/${e1.id}`);
   await page.getByLabel('Lotação',{exact:true}).fill('1');let save=page.waitForResponse(r=>r.request().method()==='PUT');
@@ -116,15 +116,15 @@ try {
   await logout();await login('participante@catraca.local');await page.goto(management);await page.getByRole('alert').waitFor();assert.ok(!(await page.locator('body').innerText()).includes(e1.name));
   await logout();await page.goto(management);await page.getByRole('alert').waitFor();assert.ok(!(await page.locator('body').innerText()).includes(e1.name));
   await login('organizador.a@catraca.local');await page.goto(management);await checkIn(tOther.code,'Ingresso inválido para este evento');record(11,'Isolamento de A/B/participante/visitante e código de outro evento.');
-  const e3=await createEvent('E3',5,50);const t5Start=Date.now();const t5=await buy(e3.id,'0003');const t6=await buy(e3.id);await confirmed(t6.ticketId);
-  const cancellation=page.waitForResponse(r=>r.url().endsWith('/cancel'));await page.getByRole('button',{name:'Cancelar evento',exact:true}).click();assert.equal((await cancellation).status(),200);assert.ok(Date.now()-t5Start<30000);record(12,'E3 cancelado com ingresso confirmado e outro pendente lento.');
+  const e3=await createEvent('E3',5,50);const t5Start=performance.now();const t5=await buy(e3.id,'0003');const t6=await buy(e3.id);await confirmed(t6.ticketId);
+  const cancellation=page.waitForResponse(r=>r.url().endsWith('/cancel'));await page.getByRole('button',{name:'Cancelar evento',exact:true}).click();assert.equal((await cancellation).status(),200);assert.ok(performance.now()-t5Start<30000);record(12,'E3 cancelado com ingresso confirmado e outro pendente lento.');
   assert.ok(!(await api('/api/partner/events')).body.some(e=>e.id===e3.id));assert.equal((await api(`/api/partner/events/${e3.id}/purchases`,'POST',{buyerEmail:'x@example.com',cardNumber:card('0001')})).status,404);
   assert.equal((await ticket(t6.ticketId)).status,'refunded');assert.equal((await ticket(t5.ticketId)).status,'cancelled');
   await page.goto(base+'/');assert.equal(await page.getByRole('article',{name:e3.name,exact:true}).count(),0);
   await page.goto(base+`/organizer/events/${e3.id}`);
   const disabledEdit=page.getByRole('button',{name:'Salvar alterações',exact:true});
   assert.ok(await disabledEdit.count()===0 || !(await disabledEdit.isEnabled()));record(13,'Cancelamento imediato: retirado da API, compra404, refunded/cancelled e edição bloqueada.');
-  await sleep(Math.max(0,45000-(Date.now()-t5Start)));assert.equal((await ticket(t5.ticketId)).status,'cancelled');await page.reload();await page.getByText('Evento cancelado',{exact:true}).first().waitFor();
+  await sleep(Math.max(0,45000-(performance.now()-t5Start)));assert.equal((await ticket(t5.ticketId)).status,'cancelled');await page.reload();await page.getByText('Evento cancelado',{exact:true}).first().waitFor();
   await metric('confirmed',0);await metric('pending',0);await metric('checkedIn',0);await metric('availableSeats',0);await metric('revenueCents','R$ 0,00');await metric('refunded',1);await shot('04-cancelamento');record(14,'Callback tardio não ressuscita ingresso; painel cancelado correto após45s.');
   for(const label of ['E4','E5']){const e=await createEvent(label,5,10);
     // Literal shell pipeline from the public evaluator; values are passed via environment, not interpolated shell code.
