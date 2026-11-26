@@ -11,7 +11,8 @@
     "up": "node scripts/compose.js up",
     "down": "node scripts/compose.js down",
     "gates": "node scripts/compose.js gates",
-    "test": "node --test --test-concurrency=1 tests/*.test.js",
+    "test": "node scripts/test.mjs",
+    "e2e": "node scripts/evaluator.mjs",
     "seed": "node src/seed.js"
   },
   "devDependencies": {
