@@ -5,15 +5,17 @@ import { json, HttpError } from './http.js';
 import { pathToFileURL } from 'node:url';
 import { authHandler } from './auth.js';
 import { eventsHandler } from './events.js';
-export function createApp({ db = openDb(), handlers = [authHandler, eventsHandler] } = {}) {
+import { purchasesHandler, processPayments } from './purchases.js';
+import { partnerHandler } from './partner.js';
+export function createApp({ db = openDb(), handlers = [partnerHandler, authHandler, eventsHandler, purchasesHandler] } = {}) {
   seed(db);
-  return createServer(async (req, res) => {
+  const server = createServer(async (req, res) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-Frame-Options', 'DENY');
     res.setHeader('Referrer-Policy', 'same-origin');
     try {
       const url = new URL(req.url, 'http://localhost');
-      if (!['GET','HEAD','OPTIONS'].includes(req.method) && req.headers.origin) {
+      if (!url.pathname.startsWith('/api/partner/') && !['GET','HEAD','OPTIONS'].includes(req.method) && req.headers.origin) {
         if (new URL(req.headers.origin).host !== req.headers.host) throw new HttpError(403, 'forbidden_origin');
       }
       if (url.pathname === '/api/health') return json(res, 200, { status: 'ok' });
@@ -26,6 +28,9 @@ export function createApp({ db = openDb(), handlers = [authHandler, eventsHandle
       else res.end();
     }
   });
+  const timer = setInterval(() => { try { processPayments(db); } catch (error) { console.error('Payment worker:',error.message); } },100);
+  timer.unref(); server.on('close',()=>clearInterval(timer));
+  return server;
 }
 if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const db = openDb(); const server = createApp({ db });
