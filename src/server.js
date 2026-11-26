@@ -3,7 +3,9 @@ import { openDb } from './db.js';
 import { seed } from './seed.js';
 import { json, HttpError } from './http.js';
 import { pathToFileURL } from 'node:url';
-export function createApp({ db = openDb(), handlers = [] } = {}) {
+import { authHandler } from './auth.js';
+import { eventsHandler } from './events.js';
+export function createApp({ db = openDb(), handlers = [authHandler, eventsHandler] } = {}) {
   seed(db);
   return createServer(async (req, res) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');

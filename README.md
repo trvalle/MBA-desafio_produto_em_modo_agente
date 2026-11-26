@@ -32,7 +32,7 @@ WEB e API: http://localhost:3000. Chave `X-Api-Key`: `catraca-partner-local`.
 - [Brief original](docs/brief.md), [PRD](docs/PRD.md), [rastreabilidade](docs/requirements.md).
 - [F01](docs/features/F01), [F02](docs/features/F02), [F03](docs/features/F03), [F04](docs/features/F04), [F05](docs/features/F05), [F06](docs/features/F06): spec, plan, contract e reports.
 - [Estado](docs/state.json), [AGENTS.md](AGENTS.md), [arquitetura](docs/architecture.md).
-- PRs da wave paralela: serão registrados após criação e integração reais.
+- PRs mergeados da wave paralela: [F02 — autenticação #1](https://github.com/trvalle/MBA-desafio_produto_em_modo_agente/pull/1) e [F03 — eventos #2](https://github.com/trvalle/MBA-desafio_produto_em_modo_agente/pull/2). Os intervalos de commits se sobrepõem; as branches/worktrees foram implementadas simultaneamente por agentes distintos.
 
 ## Decisões
 
