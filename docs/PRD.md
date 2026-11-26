@@ -31,6 +31,7 @@ flowchart LR
   F03 -->|CF08| F06
   F04 -->|CF09| F06
   F05 -->|CF10| F06
+  F02 -.->|CF11 integração após wave 2| F03
 ```
 
 1. Wave 1: F01 estabelece infraestrutura e interfaces.
@@ -39,7 +40,7 @@ flowchart LR
 4. Wave 4: F05 integra as operações.
 5. Wave 5: F06 integra interface e jornada completa.
 
-Dependência de integração F02/F03 (CF11) não é dependência de implementação e não aparece como aresta no DAG. Bibliotecas de F01 são dependências transitivas compartilhadas. Não declarar integrações prontas antes de exercitá-las. Avaliações podem ocorrer depois de integrações necessárias, sem antecipar o status de concluída.
+Dependência de integração F02/F03 (CF11) aparece tracejada: seu contrato está congelado em F01, permitindo implementação simultânea; a integração e a avaliação de F03 aguardam F02. Bibliotecas de F01 são dependências transitivas compartilhadas. Não declarar integrações prontas antes de exercitá-las. Avaliações podem ocorrer depois de integrações necessárias, sem antecipar o status de concluída.
 
 A prova da wave 2 são os commits reais dos PRs: primeiro commit de cada PR anterior ao último do outro. Cada agente deve produzir commits substantivos durante sua execução; não alterar timestamps. PRs permanecem visíveis e são listados no README.
 
@@ -117,7 +118,7 @@ Cada aresta tem um critério e um contrato consumidor que o verifica. CF11 cobre
 | CF08 | F03 → F06 | Formulários e URL de gestão operam eventos reais e preservam isolamento e validações do domínio. | [F06](features/F06/contract.md) |
 | CF09 | F04 → F06 | Checkout/Meus ingressos exibem pending, confirmação/código e esgotado com a mesma lotação da API. | [F06](features/F06/contract.md) |
 | CF10 | F05 → F06 | Gestão apresenta mensagens e métricas reais, cancela irreversivelmente e bloqueia edição após cancelamento. | [F06](features/F06/contract.md) |
-| CF11 | F02 → F03 (integração, sem aresta) | Após integrar a wave 2, o adapter HTTP de eventos exige organizador e propriedade; domínio F03 permanece implementável sem F02. | [F03](features/F03/contract.md) |
+| CF11 | F02 → F03 (integração diferida) | Após integrar a wave 2, o adapter HTTP de eventos exige organizador e propriedade; domínio F03 permanece implementável sem F02. | [F03](features/F03/contract.md) |
 
 ## Avaliação e conclusão
 

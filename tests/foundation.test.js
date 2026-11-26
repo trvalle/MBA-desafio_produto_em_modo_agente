@@ -18,3 +18,16 @@ test('F01 saúde HTTP real', async () => {
   try { const response = await fetch(`http://127.0.0.1:${app.address().port}/api/health`); assert.equal(response.status,200); assert.deepEqual(await response.json(),{status:'ok'}); }
   finally { await new Promise(resolve => app.close(resolve)); db.close(); }
 });
+test('F01 rejeita dinheiro fracionário e callback async antes de executá-lo', () => {
+  const db = openDb(':memory:'); seed(db);
+  const insert = db.prepare('INSERT INTO events VALUES(?,?,?,?,?,?,?,?)');
+  assert.throws(() => insert.run('bad','org_a','Fracionado','2099-01-01','Local',1,1.5,'draft'));
+  assert.throws(() => insert.run('bad','org_a','Fracionado','2099-01-01','Local',1.5,100,'draft'));
+  let called = false;
+  assert.throws(() => transaction(db, async () => { called = true; }), /synchronous/);
+  assert.equal(called, false);
+  assert.throws(() => transaction(db, () => {
+    db.prepare("DELETE FROM users WHERE id='org_b'").run(); return Promise.resolve();
+  }), /Promise/);
+  assert.ok(db.prepare("SELECT id FROM users WHERE id='org_b'").get()); db.close();
+});

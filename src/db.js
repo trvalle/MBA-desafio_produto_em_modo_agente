@@ -14,13 +14,13 @@ export function openDb(path = process.env.DB_PATH || 'data/catraca.sqlite') {
     );
     CREATE TABLE IF NOT EXISTS events (
       id TEXT PRIMARY KEY, organizerId TEXT NOT NULL REFERENCES users(id), name TEXT NOT NULL,
-      startsAt TEXT NOT NULL, location TEXT NOT NULL, capacity INTEGER NOT NULL CHECK(capacity>=1),
-      priceCents INTEGER NOT NULL CHECK(priceCents>0),
+      startsAt TEXT NOT NULL, location TEXT NOT NULL, capacity INTEGER NOT NULL CHECK(typeof(capacity)='integer' AND capacity>=1),
+      priceCents INTEGER NOT NULL CHECK(typeof(priceCents)='integer' AND priceCents>0),
       status TEXT NOT NULL DEFAULT 'draft' CHECK(status IN ('draft','published','cancelled'))
     );
     CREATE TABLE IF NOT EXISTS tickets (
       id TEXT PRIMARY KEY, code TEXT NOT NULL UNIQUE, eventId TEXT NOT NULL REFERENCES events(id),
-      userId TEXT REFERENCES users(id), buyerEmail TEXT NOT NULL, priceCents INTEGER NOT NULL,
+      userId TEXT REFERENCES users(id), buyerEmail TEXT NOT NULL, priceCents INTEGER NOT NULL CHECK(typeof(priceCents)='integer' AND priceCents>0),
       status TEXT NOT NULL CHECK(status IN ('pending','confirmed','declined','cancelled','refunded')),
       checkedIn INTEGER NOT NULL DEFAULT 0 CHECK(checkedIn IN (0,1)),
       createdAt INTEGER NOT NULL, dueAt INTEGER NOT NULL,
@@ -33,8 +33,13 @@ export function openDb(path = process.env.DB_PATH || 'data/catraca.sqlite') {
 }
 // All callbacks must be synchronous: the reserved write lock covers read + mutation.
 export function transaction(db, fn) {
+  if (fn.constructor.name === 'AsyncFunction') throw new TypeError('Transaction callback must be synchronous');
   db.exec('BEGIN IMMEDIATE');
-  try { const result = fn(); db.exec('COMMIT'); return result; }
+  try {
+    const result = fn();
+    if (result && typeof result.then === 'function') throw new TypeError('Transaction callback must not return a Promise');
+    db.exec('COMMIT'); return result;
+  }
   catch (error) { db.exec('ROLLBACK'); throw error; }
 }
 export function occupied(db, eventId) {
