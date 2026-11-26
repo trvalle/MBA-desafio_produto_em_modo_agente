@@ -100,7 +100,7 @@ A prova da wave 2 são os commits reais dos PRs: primeiro commit de cada PR ante
 - **F06-AC04**: Gestão apresenta painel, check-in e cancelamento com mensagens literais e ações bloqueadas após cancelar (R10–R12).
 - **F06-AC05**: Acesso direto à gestão alheia não renderiza nome/números/ingressos para organizador B, participante ou visitante (R13).
 - **F06-AC06**: Dados não confiáveis são renderizados como texto; navegação funciona em reload de URL direta e status usa rótulos PT-BR.
-- **F06-AC07**: Fluxo oficial completo passa na main em clone limpo e gera evidências reais, incluindo UI, API, concorrência, restart e artefatos.
+- **F06-AC07**: Os passos 1–17 do fluxo oficial passam na main em clone limpo e geram evidências reais de UI, API, concorrência e restart. O passo 18 é obrigatório na auditoria global posterior à criação dos relatórios (END01/EVA02/STA01/DEL01); não depende da autoaprovação do próprio relatório F06.
 
 ## Critérios cross-feature
 

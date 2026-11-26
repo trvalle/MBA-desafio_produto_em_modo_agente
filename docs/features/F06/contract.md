@@ -16,7 +16,7 @@ Avaliador: agente distinto do implementador, em contexto novo/vazio. Não modifi
 | F06-T04 | F06-AC04 | Executar cenários E1/E3 na UI, conferir todos números e mensagens, editar/publicar indisponíveis ou rejeitados. |
 | F06-T05 | F06-AC05 | Copiar URL de E1 e abrir nas três sessões; conferir DOM/tela e resposta de dados; o ID na URL não conta vazamento. |
 | F06-T06 | F06-AC06 | Usar nome de evento com markup sem execução; recarregar /organizer/events/:id e /tickets; conferir cinco rótulos de status. |
-| F06-T07 | F06-AC07 | Executar os 18 passos sem atalhos, com gateway padrão e dados originais; registrar commit, comandos, saídas e screenshots reais. |
+| F06-T07 | F06-AC07 | Executar os passos 1–17 sem atalhos, com gateway padrão e dados originais; registrar commit, comandos, saídas e screenshots reais. O passo 18 permanece obrigatório como auditoria global após os relatórios e o estado serem commitados; ver ADR de ordem de avaliação. |
 | F06-CF07 | CF07 | Cadastro/login/logout da interface refletem sessão real e não permitem escolha de organizador. Exercitar os componentes integrados e registrar resposta HTTP/estado/interface que demonstre a transferência de comportamento. |
 | F06-CF08 | CF08 | Formulários e URL de gestão operam eventos reais e preservam isolamento e validações do domínio. Exercitar os componentes integrados e registrar resposta HTTP/estado/interface que demonstre a transferência de comportamento. |
 | F06-CF09 | CF09 | Checkout/Meus ingressos exibem pending, confirmação/código e esgotado com a mesma lotação da API. Exercitar os componentes integrados e registrar resposta HTTP/estado/interface que demonstre a transferência de comportamento. |
