@@ -1,0 +1,11 @@
+from pathlib import Path
+p=Path('docs/evidence/eval-sales-ops-20261125')
+s=(p/'probe.mjs').read_text()
+s=s.replace("'http.jsonl'","'http-attempt2.jsonl'").replace("'results.json'","'results-attempt2.json'")
+s=s.replace('at:new Date().toISOString(),...x','at:new Date().toISOString(),monotonicMs:performance.now(),...x')
+s=s.replace('const started=Date.now()','const started=performance.now()').replace('Date.now()-started','performance.now()-started')
+s=s.replace('const start=Date.now()','const start=performance.now()').replace('Date.now()-t.start','performance.now()-t.start').replace('Date.now()-temporals[0].start','performance.now()-temporals[0].start')
+s=s.replace('cancelAt=Date.now()','cancelAt=performance.now()').replace('Date.now()-cancelAt','performance.now()-cancelAt').replace('cancelAt+45100-Date.now()','cancelAt+45100-performance.now()')
+s=s.replace('try{\n let draft',"const heartbeat=setInterval(()=>record({heartbeat:true,wallMs:Date.now()}),500);\ntry{\n let draft")
+s=s.replace('await new Promise(r=>app.close(r));db.close();','clearInterval(heartbeat);await new Promise(r=>app.close(r));db.close();')
+(p/'probe-attempt2.mjs').write_text(s)

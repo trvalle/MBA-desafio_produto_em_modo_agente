@@ -1,0 +1,124 @@
+
+> catraca@1.0.0 gates
+> node scripts/compose.js gates
+
+ Image catraca-eval-sales-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 520B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 390B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:24.22.3-bookworm-slim
+#3 DONE 0.7s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 87B done
+#4 DONE 0.0s
+
+#5 [ 1/10] FROM docker.io/library/node:24.22.3-bookworm-slim@sha256:873f586f3794f52281bd039bf02c048a0be08fde619338f9941bad1eb6b34530
+#5 resolve docker.io/library/node:24.22.3-bookworm-slim@sha256:873f586f3794f52281bd039bf02c048a0be08fde619338f9941bad1eb6b34530 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 257.81kB done
+#6 DONE 0.0s
+
+#7 [ 2/10] WORKDIR /app
+#7 CACHED
+
+#8 [ 3/10] COPY package*.json ./
+#8 CACHED
+
+#9 [ 4/10] COPY src ./src
+#9 DONE 0.0s
+
+#10 [ 5/10] COPY public ./public
+#10 DONE 0.0s
+
+#11 [ 6/10] COPY tests ./tests
+#11 DONE 0.0s
+
+#12 [ 7/10] COPY scripts ./scripts
+#12 DONE 0.0s
+
+#13 [ 8/10] COPY docs ./docs
+#13 DONE 0.0s
+
+#14 [ 9/10] COPY AGENTS.md ./
+#14 DONE 0.0s
+
+#15 [10/10] RUN mkdir -p /app/data && chown node:node /app/data
+#15 DONE 0.2s
+
+#16 exporting to image
+#16 exporting layers
+#16 exporting layers 0.2s done
+#16 exporting manifest sha256:884035732555f593354f4135f74ee5c87188bd8f0f437abef59d5f029fa1bf4f done
+#16 exporting config sha256:98ca2ea89e8521d7bbf8ede34e65f8f6354f12829f5a37f675324a73563cbe6d done
+#16 exporting attestation manifest sha256:66a1731fc0358ba78201fdc2fbd97c32e2ce4db5418118b4485b051348746bf7 done
+#16 exporting manifest list sha256:05901540a32f2e2ebe930f1fff428f0e2b81de319d48b4cba287497fc2b9e50f done
+#16 naming to docker.io/library/catraca-eval-sales-app:latest done
+#16 unpacking to docker.io/library/catraca-eval-sales-app:latest 0.1s done
+#16 DONE 0.3s
+
+#17 resolving provenance for metadata file
+#17 DONE 0.0s
+ Image catraca-eval-sales-app Built 
+ Volume catraca-eval-sales_catraca-data Creating 
+ Volume catraca-eval-sales_catraca-data Creating 
+ Network catraca-eval-sales_default Creating 
+ Network catraca-eval-sales_default Creating 
+ Volume catraca-eval-sales_catraca-data Created 
+ Volume catraca-eval-sales_catraca-data Created 
+ Network catraca-eval-sales_default Created 
+ Network catraca-eval-sales_default Created 
+ Container catraca-eval-sales-app-run-962eaa3bb036 Creating 
+ Container catraca-eval-sales-app-run-962eaa3bb036 Created 
+
+> catraca@1.0.0 test
+> node --test --test-concurrency=1 tests/*.test.js
+
+✔ F02 cadastro, me, logout e novo login usam sessão persistida e senha protegida (154.132996ms)
+✔ F02 cadastro não aceita elevação de papel e normaliza email sem duplicar contas (103.829128ms)
+✔ F02/CF01 três contas da seed autenticam com seus papéis; senhas erradas não autenticam (201.218346ms)
+✔ F02 requireUser retorna somente campos públicos e distingue visitante de papel incorreto (98.973882ms)
+✔ F02 login rotaciona sessão; falha de login preserva sessão anterior; logout é idempotente (121.204133ms)
+✔ F02 sessões expiradas, forjadas, malformadas e cookies ambíguos não autenticam (85.314595ms)
+✔ F02 entradas inválidas não criam usuários nem sessões e rotas desconhecidas não são capturadas (71.752163ms)
+✔ F02 cadastro reverte conta quando inserção da sessão falha (76.790307ms)
+✔ F02 mutações de autenticação rejeitam origem externa pelo servidor (64.301491ms)
+✔ F03 create validates required values, future date and integer cents without partial writes (2.816691ms)
+✔ F03 update counts pending and confirmed across channels, preserves historical prices and rolls back rejection (1.040517ms)
+✔ F03 update revalidates all fields and future dates, ignoring attempted identity/status changes (1.312857ms)
+✔ F03 ownership applies to list, direct URL domain lookup, edit and publish (0.844182ms)
+✔ F03 public catalog follows publication and cancellation, preserving sold out events (1.477994ms)
+✔ F03 public HTTP adapter works without auth dependency and ignores unrelated routes (17.930619ms)
+✔ F01 seed idempotente, credenciais e rollback real (85.455546ms)
+✔ F01 saúde HTTP real (71.475666ms)
+✔ F01 rejeita dinheiro fracionário e callback async antes de executá-lo (59.814134ms)
+✔ F05 painel E1 integra HTTP dos dois canais com preços históricos e entrada única (149.861647ms)
+✔ F05 cancelamento E3 é imediato, irreversível e preservado por callback lento dos dois canais (111.795786ms)
+✔ F05 check-in segue todas as mensagens literais e a prioridade R10 (57.40251ms)
+✔ F05/CF06 todas as rotas protegem dados e mutações por papel e propriedade antes do corpo (132.780248ms)
+✔ F05 cancelamento rejeita draft e reverte todas as mudanças se a transação falhar (58.584907ms)
+✔ F05 BEGIN IMMEDIATE concede apenas uma entrada entre conexões SQLite independentes (179.40492ms)
+✔ F04 preço histórico, validação antes do evento, reservas, recusa e callback idempotente (67.97421ms)
+✔ F04 gateway defaults and persisted jobs survive reopen; final states cannot resurrect (90.097769ms)
+✔ F04 HTTP contract, precedence, channels and repeated 30-request races (229.699229ms)
+✔ F04 database lock protects reservations across independent worker connections (195.608619ms)
+ℹ tests 28
+ℹ suites 0
+ℹ pass 28
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2846.831745
+npm notice
+npm notice New major version of npm available! 11.19.1 -> 12.2.3
+npm notice Changelog: https://github.com/npm/cli/releases/tag/v12.2.3
+npm notice To update run: npm install -g npm@12.2.3
+npm notice

@@ -1,0 +1,74 @@
+
+> catraca@1.0.0 up
+> node scripts/compose.js up
+
+ Image catraca-eval-sales-app Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 520B done
+#1 DONE 0.0s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 390B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:24.22.3-bookworm-slim
+#3 DONE 0.2s
+
+#4 [internal] load .dockerignore
+#4 transferring context: 87B done
+#4 DONE 0.0s
+
+#5 [ 1/10] FROM docker.io/library/node:24.22.3-bookworm-slim@sha256:873f586f3794f52281bd039bf02c048a0be08fde619338f9941bad1eb6b34530
+#5 resolve docker.io/library/node:24.22.3-bookworm-slim@sha256:873f586f3794f52281bd039bf02c048a0be08fde619338f9941bad1eb6b34530 0.0s done
+#5 DONE 0.0s
+
+#6 [internal] load build context
+#6 transferring context: 9.59kB done
+#6 DONE 0.0s
+
+#7 [ 3/10] COPY package*.json ./
+#7 CACHED
+
+#8 [ 2/10] WORKDIR /app
+#8 CACHED
+
+#9 [ 5/10] COPY public ./public
+#9 CACHED
+
+#10 [ 4/10] COPY src ./src
+#10 CACHED
+
+#11 [ 6/10] COPY tests ./tests
+#11 CACHED
+
+#12 [ 7/10] COPY scripts ./scripts
+#12 CACHED
+
+#13 [ 8/10] COPY docs ./docs
+#13 DONE 0.0s
+
+#14 [ 9/10] COPY AGENTS.md ./
+#14 DONE 0.0s
+
+#15 [10/10] RUN mkdir -p /app/data && chown node:node /app/data
+#15 DONE 0.2s
+
+#16 exporting to image
+#16 exporting layers 0.1s done
+#16 exporting manifest sha256:18ef5aba7bf16ea57403dd6db70e8702c3882705c66a7ea8a43a2a13bd17f4aa done
+#16 exporting config sha256:ef3b38b381e9433e19e9433a2af847171b02e78bfe5ae17dccaeb184d2cdc23e done
+#16 exporting attestation manifest sha256:d8826feff1b42e80e364d9013d845b36a836f58098b9a18d09d90cce1e58eaf7 done
+#16 exporting manifest list sha256:0bbfe3c81e14c6f0ec701ee414157231edaf7d1e479bed5a25faf7a7485b3404 done
+#16 naming to docker.io/library/catraca-eval-sales-app:latest done
+#16 unpacking to docker.io/library/catraca-eval-sales-app:latest 0.0s done
+#16 DONE 0.2s
+
+#17 resolving provenance for metadata file
+#17 DONE 0.0s
+ Image catraca-eval-sales-app Built 
+ Container catraca-eval-sales-app-1 Creating 
+ Container catraca-eval-sales-app-1 Created 
+ Container catraca-eval-sales-app-1 Starting 
+ Container catraca-eval-sales-app-1 Started 
+ Container catraca-eval-sales-app-1 Waiting 
+ Container catraca-eval-sales-app-1 Healthy 

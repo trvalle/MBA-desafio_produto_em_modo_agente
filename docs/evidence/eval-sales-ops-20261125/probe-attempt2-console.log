@@ -1,0 +1,117 @@
+[
+  {
+    "name": "F03-T01 creation validation",
+    "status": "PASS",
+    "detail": {
+      "invalidCases": 14
+    }
+  },
+  {
+    "name": "F03-T03 draft catalog and F04-CF04 draft cannot sell",
+    "status": "PASS"
+  },
+  {
+    "name": "F03-T04 T06 CF11 domain and HTTP ownership",
+    "status": "PASS"
+  },
+  {
+    "name": "F04-T01 immediate reservation both channels and immutable price",
+    "status": "PASS",
+    "detail": {
+      "immediateMs": "see per request",
+      "occupied": 5
+    }
+  },
+  {
+    "name": "F04-T05 key first exact errors and malformed bodies",
+    "status": "PASS"
+  },
+  {
+    "name": "F04-T06 exact partner schemas and types",
+    "status": "PASS"
+  },
+  {
+    "name": "F04-T07 CF03 ownership and same email distinct channels",
+    "status": "PASS"
+  },
+  {
+    "name": "F03-T02 CF02 live occupied capacity atomicity",
+    "status": "PASS"
+  },
+  {
+    "name": "F05 E1 setup historical 100 100 150",
+    "status": "PASS"
+  },
+  {
+    "name": "F04-T03 three independent bursts 30 concurrent requests",
+    "status": "PASS",
+    "detail": [
+      {
+        "eventId": "evt_f8030cc0-1775-4851-9a14-0d76b61f743d",
+        "counts": {
+          "202": 5,
+          "409": 25
+        }
+      },
+      {
+        "eventId": "evt_df119644-6ba6-4343-a7fc-538876f239df",
+        "counts": {
+          "202": 5,
+          "409": 25
+        }
+      },
+      {
+        "eventId": "evt_504ceb75-aa6a-481c-8d09-fd9ace677bf2",
+        "counts": {
+          "202": 5,
+          "409": 25
+        }
+      }
+    ]
+  },
+  {
+    "name": "F05 E3 setup real fast and slow plus R10 pending",
+    "status": "FAIL",
+    "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'confirmed'\n- 'pending'\n\n    at file:///root/catraca-evals/sales-ops/docs/evidence/eval-sales-ops-20261125/probe-attempt2.mjs:141:86\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async test (file:///root/catraca-evals/sales-ops/docs/evidence/eval-sales-ops-20261125/probe-attempt2.mjs:13:48)\n    at async file:///root/catraca-evals/sales-ops/docs/evidence/eval-sales-ops-20261125/probe-attempt2.mjs:138:2"
+  },
+  {
+    "name": "F05-T05 E1 dashboard and T04 simultaneous single admission",
+    "status": "PASS"
+  },
+  {
+    "name": "F05-T07 CF06 all operation actor matrix",
+    "status": "FAIL",
+    "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n+ actual - expected\n\n  {\n    availableSeats: 0,\n+   checkedIn: 0,\n+   confirmed: 2,\n+   pending: 0,\n-   checkedIn: 1,\n-   confirmed: 1,\n-   pending: 1,\n    refunded: 0,\n+   revenueCents: 20000\n-   revenueCents: 10000\n  }\n\n    at file:///root/catraca-evals/sales-ops/docs/evidence/eval-sales-ops-20261125/probe-attempt2.mjs:154:10\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async test (file:///root/catraca-evals/sales-ops/docs/evidence/eval-sales-ops-20261125/probe-attempt2.mjs:13:48)\n    at async file:///root/catraca-evals/sales-ops/docs/evidence/eval-sales-ops-20261125/probe-attempt2.mjs:150:2"
+  },
+  {
+    "name": "F05-T01 T02 T06 integrated cancellation",
+    "status": "FAIL",
+    "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'refunded'\n- 'cancelled'\n\n    at file:///root/catraca-evals/sales-ops/docs/evidence/eval-sales-ops-20261125/probe-attempt2.mjs:158:67\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async test (file:///root/catraca-evals/sales-ops/docs/evidence/eval-sales-ops-20261125/probe-attempt2.mjs:13:48)\n    at async file:///root/catraca-evals/sales-ops/docs/evidence/eval-sales-ops-20261125/probe-attempt2.mjs:156:2"
+  },
+  {
+    "name": "F03-T03 T05 and F05-T01 cancelled blocked everywhere",
+    "status": "PASS"
+  },
+  {
+    "name": "F05-T03 literal R10 full precedence",
+    "status": "PASS"
+  },
+  {
+    "name": "F04-T02 T04 default real gateway timings all five suffixes",
+    "status": "FAIL",
+    "error": "AssertionError [ERR_ASSERTION]: {\"suffix\":\"0003\",\"status\":\"confirmed\",\"elapsed\":2059.286411}\n    at file:///root/catraca-evals/sales-ops/docs/evidence/eval-sales-ops-20261125/probe-attempt2.mjs:178:81\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async test (file:///root/catraca-evals/sales-ops/docs/evidence/eval-sales-ops-20261125/probe-attempt2.mjs:13:48)\n    at async file:///root/catraca-evals/sales-ops/docs/evidence/eval-sales-ops-20261125/probe-attempt2.mjs:176:2"
+  },
+  {
+    "name": "F04-T04 F05-T02 T06 CF05 state preserved 45s after cancellation",
+    "status": "FAIL",
+    "error": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n+ actual - expected\n\n+ 'refunded'\n- 'cancelled'\n\n    at file:///root/catraca-evals/sales-ops/docs/evidence/eval-sales-ops-20261125/probe-attempt2.mjs:182:153\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n    at async test (file:///root/catraca-evals/sales-ops/docs/evidence/eval-sales-ops-20261125/probe-attempt2.mjs:13:48)\n    at async file:///root/catraca-evals/sales-ops/docs/evidence/eval-sales-ops-20261125/probe-attempt2.mjs:181:2"
+  },
+  {
+    "name": "Source transaction and auth dependency inspection",
+    "status": "PASS",
+    "detail": {
+      "transactionProtocol": "BEGIN IMMEDIATE synchronous",
+      "domain": "events auth lazy-loaded only in HTTP handler"
+    }
+  }
+]
