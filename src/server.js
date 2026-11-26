@@ -8,7 +8,8 @@ import { eventsHandler } from './events.js';
 import { purchasesHandler, processPayments } from './purchases.js';
 import { partnerHandler } from './partner.js';
 import { operationsHandler } from './operations.js';
-export function createApp({ db = openDb(), handlers = [partnerHandler, authHandler, eventsHandler, purchasesHandler, operationsHandler] } = {}) {
+import { staticHandler } from './static.js';
+export function createApp({ db = openDb(), handlers = [partnerHandler, authHandler, eventsHandler, purchasesHandler, operationsHandler, staticHandler] } = {}) {
   seed(db);
   const server = createServer(async (req, res) => {
     res.setHeader('X-Content-Type-Options', 'nosniff');
