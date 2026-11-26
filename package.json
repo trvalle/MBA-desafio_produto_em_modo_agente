@@ -1,0 +1,12 @@
+{
+  "name": "catraca", "version": "1.0.0", "private": true, "type": "module",
+  "engines": {"node": ">=24 <25"},
+  "scripts": {
+    "start": "node src/server.js",
+    "up": "node scripts/compose.js up",
+    "down": "node scripts/compose.js down",
+    "gates": "node scripts/compose.js gates",
+    "test": "node --test --test-concurrency=1 tests/*.test.js",
+    "seed": "node src/seed.js"
+  }
+}

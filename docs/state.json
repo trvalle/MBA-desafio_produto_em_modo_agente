@@ -1,0 +1,15 @@
+{
+  "project": "Catraca",
+  "phase": "foundation",
+  "verdict": "REJECTED — CORRECTIONS REQUIRED",
+  "features": [
+    {"id":"F01","status":"implemented_awaiting_evaluation","latestReport":null},
+    {"id":"F02","status":"planned","latestReport":null},
+    {"id":"F03","status":"planned","latestReport":null},
+    {"id":"F04","status":"planned","latestReport":null},
+    {"id":"F05","status":"planned","latestReport":null},
+    {"id":"F06","status":"planned","latestReport":null}
+  ],
+  "nextAction": "Avaliar F01 e implementar F02/F03 em paralelo com PRs reais.",
+  "blockers": []
+}
